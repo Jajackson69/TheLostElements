@@ -11,7 +11,6 @@ public class SpellIconCombiner : MonoBehaviour
     [Header("Spell Prefabs")]
     [SerializeField] private GameObject fireballPrefab;
     [SerializeField] private Transform firePoint; // Fireball spawn point
-    [SerializeField] private SpriteRenderer playerSprite; // Player's SpriteRenderer
 
     private bool hasFire = false;
     private bool hasWater = false;
@@ -26,7 +25,6 @@ public class SpellIconCombiner : MonoBehaviour
 
     void Update()
     {
-        // Select Fire
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             hasFire = true;
@@ -34,7 +32,6 @@ public class SpellIconCombiner : MonoBehaviour
             Debug.Log("🔥 Fire selected");
         }
 
-        // Select Water
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             hasWater = true;
@@ -42,7 +39,6 @@ public class SpellIconCombiner : MonoBehaviour
             Debug.Log("💧 Water selected");
         }
 
-        // Craft ability
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (hasFire && hasWater)
@@ -63,7 +59,6 @@ public class SpellIconCombiner : MonoBehaviour
             }
         }
 
-        // Cast ability
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (craftedSteam)
@@ -83,27 +78,29 @@ public class SpellIconCombiner : MonoBehaviour
         craftedSteam = false;
         steamIcon.enabled = false;
 
-        // Spawn Fireball prefab
         if (fireballPrefab != null && firePoint != null)
         {
+            // Spawn fireball
             GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
 
-            // Decide shooting direction
-            float direction = playerSprite.flipX ? -1f : 1f;
+            // Calculate direction towards mouse
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorld.z = 0f; // keep in 2D
+            Vector2 direction = (mouseWorld - firePoint.position).normalized;
 
-            // Move fireball
+            // Apply velocity
             Rigidbody2D rb = fireball.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.linearVelocity = new Vector2(10f * direction, 0f); // shoot left or right
+                rb.gravityScale = 0f;
+                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                rb.linearVelocity = direction * 10f; // speed 10
             }
 
-            // Flip fireball sprite if going left
-            SpriteRenderer fbSprite = fireball.GetComponent<SpriteRenderer>();
-            if (fbSprite != null && direction < 0)
-            {
-                fbSprite.flipX = true;
-            }
+            // Rotate fireball to face direction (optional)
+            fireball.transform.right = direction;
+
+            Destroy(fireball, 3f); // clean up after 3 seconds
         }
     }
 }

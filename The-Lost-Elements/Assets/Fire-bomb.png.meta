@@ -1,112 +1,115 @@
 fileFormatVersion: 2
-guid: ef18869bb626c644192ea74086ec43d3
+guid: 25b0bd3d08d29184598e3eb3fa900c33
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8227423255571478107
-    second: Explosion SpriteSheet_0
+      213: 4208818756308097753
+    second: Fire-bomb_0
   - first:
-      213: -6740212079913250166
-    second: Explosion SpriteSheet_1
+      213: 4489344109124849290
+    second: Fire-bomb_1
   - first:
-      213: 3274773884147064335
-    second: Explosion SpriteSheet_2
+      213: -1794179056713160445
+    second: Fire-bomb_2
   - first:
-      213: 1117449302587671922
-    second: Explosion SpriteSheet_3
+      213: -3069246578231202153
+    second: Fire-bomb_3
   - first:
-      213: 6910662753779529337
-    second: Explosion SpriteSheet_4
+      213: 4868542670144096376
+    second: Fire-bomb_4
   - first:
-      213: 9180795563542151505
-    second: Explosion SpriteSheet_5
+      213: -2188127173522047304
+    second: Fire-bomb_5
   - first:
-      213: 8296492952570185573
-    second: Explosion SpriteSheet_6
+      213: 8155549677376188158
+    second: Fire-bomb_6
   - first:
-      213: -1189568387140394160
-    second: Explosion SpriteSheet_7
+      213: 4983100565292205969
+    second: Fire-bomb_7
   - first:
-      213: -2492908855925203694
-    second: Explosion SpriteSheet_8
+      213: 6589254519269611479
+    second: Fire-bomb_8
   - first:
-      213: -5502693285337484479
-    second: Explosion SpriteSheet_9
+      213: 2335506680206235567
+    second: Fire-bomb_9
   - first:
-      213: -8348187341106573518
-    second: Explosion SpriteSheet_10
+      213: -6837003640049841753
+    second: Fire-bomb_10
   - first:
-      213: -4780470499570323640
-    second: Explosion SpriteSheet_11
+      213: -707698820555485553
+    second: Fire-bomb_11
   - first:
-      213: 5663960301317498238
-    second: Explosion SpriteSheet_12
+      213: -7258058271463655723
+    second: Fire-bomb_12
   - first:
-      213: 2124883812659417606
-    second: Explosion SpriteSheet_13
+      213: -4035275178467887856
+    second: Fire-bomb_13
   - first:
-      213: -4138072101713063929
-    second: Explosion SpriteSheet_14
+      213: 1787584209667566989
+    second: Fire-bomb_14
   - first:
-      213: -8290468063142766420
-    second: Explosion SpriteSheet_15
+      213: 3340938464777982908
+    second: Fire-bomb_15
   - first:
-      213: -242370665025425002
-    second: Explosion SpriteSheet_16
+      213: 6405555079183240730
+    second: Fire-bomb_16
   - first:
-      213: -1564584853801239952
-    second: Explosion SpriteSheet_17
+      213: -1046103120045677387
+    second: Fire-bomb_17
   - first:
-      213: 3332531429926996031
-    second: Explosion SpriteSheet_18
+      213: -5124767337877142459
+    second: Fire-bomb_18
   - first:
-      213: -6669901977891206888
-    second: Explosion SpriteSheet_19
+      213: 1863533442566788447
+    second: Fire-bomb_19
   - first:
-      213: -8947962977038633433
-    second: Explosion SpriteSheet_20
+      213: -514399385027633476
+    second: Fire-bomb_20
   - first:
-      213: -2149194754138858640
-    second: Explosion SpriteSheet_21
+      213: 5547613526103920951
+    second: Fire-bomb_21
   - first:
-      213: 6290146849053243564
-    second: Explosion SpriteSheet_22
+      213: 4439409073706347924
+    second: Fire-bomb_22
   - first:
-      213: -6227036708852570646
-    second: Explosion SpriteSheet_23
+      213: -7990853862577806992
+    second: Fire-bomb_23
   - first:
-      213: 4334672125433027048
-    second: Explosion SpriteSheet_24
+      213: -6293396918043677145
+    second: Fire-bomb_24
   - first:
-      213: 1013653865819929094
-    second: Explosion SpriteSheet_25
+      213: 4527241869461650341
+    second: Fire-bomb_25
   - first:
-      213: 1399715877495475666
-    second: Explosion SpriteSheet_26
+      213: -5645859234125815727
+    second: Fire-bomb_26
   - first:
-      213: 2001468118924667142
-    second: Explosion SpriteSheet_27
+      213: -5699999015142142849
+    second: Fire-bomb_27
   - first:
-      213: -9043448812587607138
-    second: Explosion SpriteSheet_28
+      213: -9068946034712034470
+    second: Fire-bomb_28
   - first:
-      213: 7611124641338010616
-    second: Explosion SpriteSheet_29
+      213: 1679093232474825245
+    second: Fire-bomb_29
   - first:
-      213: 4885113214020968659
-    second: Explosion SpriteSheet_30
+      213: 8442176035622063707
+    second: Fire-bomb_30
   - first:
-      213: 1126774383623124869
-    second: Explosion SpriteSheet_31
+      213: -6882517725819901762
+    second: Fire-bomb_31
   - first:
-      213: -3613933821256850089
-    second: Explosion SpriteSheet_32
+      213: -2701416965854814050
+    second: Fire-bomb_32
   - first:
-      213: -2259833671963220548
-    second: Explosion SpriteSheet_33
+      213: -1178995809826475811
+    second: Fire-bomb_33
   - first:
-      213: -2649641685555676784
-    second: Explosion SpriteSheet_34
+      213: -3270303969894738908
+    second: Fire-bomb_34
+  - first:
+      213: 1061393882198069301
+    second: Fire-bomb_35
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -155,7 +158,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -202,79 +205,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Explosion SpriteSheet_0
-      rect:
-        serializedVersion: 2
-        x: 88
-        y: 213
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5a9cfdac32252dd80800000000000000
-      internalID: -8227423255571478107
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_1
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 204
-        width: 42
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a8259f113d4f572a0800000000000000
-      internalID: -6740212079913250166
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_2
-      rect:
-        serializedVersion: 2
-        x: 203
-        y: 204
-        width: 43
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f0edf444f75527d20800000000000000
-      internalID: 3274773884147064335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_3
+      name: Fire-bomb_0
       rect:
         serializedVersion: 2
         x: 10
-        y: 133
-        width: 50
-        height: 46
+        y: 54
+        width: 35
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -283,151 +220,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2750f3f583af18f00800000000000000
-      internalID: 1117449302587671922
+      spriteID: 9dadebd0c5ab86a30800000000000000
+      internalID: 4208818756308097753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_4
+      name: Fire-bomb_1
       rect:
         serializedVersion: 2
-        x: 73
-        y: 130
-        width: 50
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9763d89092b97ef50800000000000000
-      internalID: 6910662753779529337
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_5
-      rect:
-        serializedVersion: 2
-        x: 118
-        y: 160
-        width: 6
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 15189605cecb86f70800000000000000
-      internalID: 9180795563542151505
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_6
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 154
-        width: 15
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5674a773260132370800000000000000
-      internalID: 8296492952570185573
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_7
-      rect:
-        serializedVersion: 2
-        x: 149
-        y: 166
-        width: 13
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0536670caddcd7fe0800000000000000
-      internalID: -1189568387140394160
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_8
-      rect:
-        serializedVersion: 2
-        x: 155
-        y: 155
-        width: 33
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 21d17218a98676dd0800000000000000
-      internalID: -2492908855925203694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_9
-      rect:
-        serializedVersion: 2
-        x: 205
-        y: 159
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 143388b8c9182a3b0800000000000000
-      internalID: -5502693285337484479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_10
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 168
-        width: 12
+        x: 87
+        y: 50
+        width: 19
         height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -437,20 +242,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 23f0ee608d7452c80800000000000000
-      internalID: -8348187341106573518
+      spriteID: a8e01e28eaa5d4e30800000000000000
+      internalID: 4489344109124849290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_11
+      name: Fire-bomb_2
       rect:
         serializedVersion: 2
-        x: 227
-        y: 151
-        width: 25
-        height: 28
+        x: 770
+        y: 21
+        width: 60
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -459,20 +264,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 84f60ed986b58adb0800000000000000
-      internalID: -4780470499570323640
+      spriteID: 309aa2567abc917e0800000000000000
+      internalID: -1794179056713160445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_12
+      name: Fire-bomb_3
       rect:
         serializedVersion: 2
-        x: 137
-        y: 129
-        width: 24
-        height: 29
+        x: 851
+        y: 43
+        width: 26
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -481,20 +286,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e75a1f592ed6a9e40800000000000000
-      internalID: 5663960301317498238
+      spriteID: 79e2278af78d765d0800000000000000
+      internalID: -3069246578231202153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_13
+      name: Fire-bomb_4
       rect:
         serializedVersion: 2
-        x: 161
-        y: 128
-        width: 22
-        height: 32
+        x: 0
+        y: 15
+        width: 10
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -503,41 +308,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 602da8ac19a1d7d10800000000000000
-      internalID: 2124883812659417606
+      spriteID: 87845cb83c9809340800000000000000
+      internalID: 4868542670144096376
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_14
+      name: Fire-bomb_5
       rect:
         serializedVersion: 2
-        x: 201
-        y: 127
-        width: 23
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7005072195d9296c0800000000000000
-      internalID: -4138072101713063929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_15
-      rect:
-        serializedVersion: 2
-        x: 225
-        y: 127
-        width: 19
+        x: 57
+        y: 20
+        width: 8
         height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -547,283 +330,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ca897aaa83752fc80800000000000000
-      internalID: -8290468063142766420
+      spriteID: 8beb6dacde532a1e0800000000000000
+      internalID: -2188127173522047304
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_16
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 96
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6913f2f0a2de2acf0800000000000000
-      internalID: -242370665025425002
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_17
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 104
-        width: 12
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 07a78307d5a794ae0800000000000000
-      internalID: -1564584853801239952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_18
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 82
-        width: 21
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f388f93dda78f3e20800000000000000
-      internalID: 3332531429926996031
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_19
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 99
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8198e116d7fbf63a0800000000000000
-      internalID: -6669901977891206888
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_20
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 104
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 726f34aa41372d380800000000000000
-      internalID: -8947962977038633433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_21
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 95
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 07b9b6e02c68c22e0800000000000000
-      internalID: -2149194754138858640
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_22
-      rect:
-        serializedVersion: 2
-        x: 143
-        y: 99
-        width: 8
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ca87cda8b371b4750800000000000000
-      internalID: 6290146849053243564
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_23
-      rect:
-        serializedVersion: 2
-        x: 151
-        y: 105
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ae566850b1f1599a0800000000000000
-      internalID: -6227036708852570646
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_24
-      rect:
-        serializedVersion: 2
-        x: 169
-        y: 95
-        width: 15
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8e9193ef459d72c30800000000000000
-      internalID: 4334672125433027048
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_25
-      rect:
-        serializedVersion: 2
-        x: 203
-        y: 91
-        width: 45
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 60af56502d8311e00800000000000000
-      internalID: 1013653865819929094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_26
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 63
-        width: 16
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2dd8790bc2acc6310800000000000000
-      internalID: 1399715877495475666
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_27
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 63
-        width: 19
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 60926c166a4a6cb10800000000000000
-      internalID: 2001468118924667142
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_28
+      name: Fire-bomb_6
       rect:
         serializedVersion: 2
         x: 73
-        y: 75
-        width: 15
+        y: 13
+        width: 14
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efe2f0cb8355e2170800000000000000
+      internalID: 8155549677376188158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_7
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 35
+        width: 12
         height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -833,64 +374,174 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e9b994d18373f7280800000000000000
-      internalID: -9043448812587607138
+      spriteID: 1974a420097872540800000000000000
+      internalID: 4983100565292205969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_29
+      name: Fire-bomb_8
       rect:
         serializedVersion: 2
-        x: 98
+        x: 589
+        y: 10
+        width: 38
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d7d3bbe21cb17b50800000000000000
+      internalID: 6589254519269611479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_9
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 7
+        width: 49
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa79e3c93f2696020800000000000000
+      internalID: 2335506680206235567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_10
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 7
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9c6c2d9651e11a0800000000000000
+      internalID: -6837003640049841753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_11
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 11
+        width: 28
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ec3d81cafbd26f0800000000000000
+      internalID: -707698820555485553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_12
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 44
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d6b25af472364b90800000000000000
+      internalID: -7258058271463655723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_13
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 43
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0157870ea92dff7c0800000000000000
+      internalID: -4035275178467887856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_14
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 11
+        width: 17
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8d255f1e56cec810800000000000000
+      internalID: 1787584209667566989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_15
+      rect:
+        serializedVersion: 2
+        x: 94
         y: 9
-        width: 26
-        height: 78
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8fbac2c298520a960800000000000000
-      internalID: 7611124641338010616
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_30
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 75
-        width: 11
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3d06941f5986bc340800000000000000
-      internalID: 4885113214020968659
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion SpriteSheet_31
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 72
         width: 25
-        height: 10
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -899,20 +550,86 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 587bdddf45b13af00800000000000000
-      internalID: 1126774383623124869
+      spriteID: cb3d78925d56d5e20800000000000000
+      internalID: 3340938464777982908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_32
+      name: Fire-bomb_16
       rect:
         serializedVersion: 2
-        x: 226
-        y: 72
+        x: 147
+        y: 21
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1e8aeb086a15e850800000000000000
+      internalID: 6405555079183240730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_17
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b4ef3b31ce7b71f0800000000000000
+      internalID: -1046103120045677387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_18
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 16
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5440f45224b21e8b0800000000000000
+      internalID: -5124767337877142459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_19
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 8
         width: 13
-        height: 10
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -921,19 +638,151 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7552736465ab8ddc0800000000000000
-      internalID: -3613933821256850089
+      spriteID: f551147eac99cd910800000000000000
+      internalID: 1863533442566788447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_33
+      name: Fire-bomb_20
       rect:
         serializedVersion: 2
-        x: 30
-        y: 31
-        width: 25
+        x: 398
+        y: 8
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbe9fb61c7c7cd8f0800000000000000
+      internalID: -514399385027633476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_21
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 14
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73193960c151dfc40800000000000000
+      internalID: 5547613526103920951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_22
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49da9e21803fb9d30800000000000000
+      internalID: 4439409073706347924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_23
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 28
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 071edf4dfb8ca1190800000000000000
+      internalID: -7990853862577806992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_24
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 12
+        width: 19
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72ee77dc8dc59a8a0800000000000000
+      internalID: -6293396918043677145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_25
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 17
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ab79817e7ef3de30800000000000000
+      internalID: 4527241869461650341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_26
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 13
+        width: 13
         height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -943,19 +792,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cb56a2b9f3573a0e0800000000000000
-      internalID: -2259833671963220548
+      spriteID: 150621a80f0e5a1b0800000000000000
+      internalID: -5645859234125815727
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion SpriteSheet_34
+      name: Fire-bomb_27
       rect:
         serializedVersion: 2
-        x: 34
-        y: 9
-        width: 7
+        x: 475
+        y: 17
+        width: 10
         height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -965,8 +814,184 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 099f266ece49a3bd0800000000000000
-      internalID: -2649641685555676784
+      spriteID: f7c406a781985e0b0800000000000000
+      internalID: -5699999015142142849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_28
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 14
+        width: 28
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a534dc971a1a42280800000000000000
+      internalID: -9068946034712034470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_29
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 9
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d12ac6216665d4710800000000000000
+      internalID: 1679093232474825245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_30
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 6
+        width: 31
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5e81963062a82570800000000000000
+      internalID: 8442176035622063707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_31
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 15
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb8ec20f7926c70a0800000000000000
+      internalID: -6882517725819901762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_32
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 16
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90a2001593a28ad0800000000000000
+      internalID: -2701416965854814050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_33
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 18
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd07e9bbe8d53afe0800000000000000
+      internalID: -1178995809826475811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_34
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 15
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424dfdebddb8d92d0800000000000000
+      internalID: -3270303969894738908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire-bomb_35
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 6
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5305033cc14dabe00800000000000000
+      internalID: 1061393882198069301
       vertices: []
       indices: 
       edges: []
@@ -985,41 +1010,42 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Explosion SpriteSheet_0: -8227423255571478107
-      Explosion SpriteSheet_1: -6740212079913250166
-      Explosion SpriteSheet_10: -8348187341106573518
-      Explosion SpriteSheet_11: -4780470499570323640
-      Explosion SpriteSheet_12: 5663960301317498238
-      Explosion SpriteSheet_13: 2124883812659417606
-      Explosion SpriteSheet_14: -4138072101713063929
-      Explosion SpriteSheet_15: -8290468063142766420
-      Explosion SpriteSheet_16: -242370665025425002
-      Explosion SpriteSheet_17: -1564584853801239952
-      Explosion SpriteSheet_18: 3332531429926996031
-      Explosion SpriteSheet_19: -6669901977891206888
-      Explosion SpriteSheet_2: 3274773884147064335
-      Explosion SpriteSheet_20: -8947962977038633433
-      Explosion SpriteSheet_21: -2149194754138858640
-      Explosion SpriteSheet_22: 6290146849053243564
-      Explosion SpriteSheet_23: -6227036708852570646
-      Explosion SpriteSheet_24: 4334672125433027048
-      Explosion SpriteSheet_25: 1013653865819929094
-      Explosion SpriteSheet_26: 1399715877495475666
-      Explosion SpriteSheet_27: 2001468118924667142
-      Explosion SpriteSheet_28: -9043448812587607138
-      Explosion SpriteSheet_29: 7611124641338010616
-      Explosion SpriteSheet_3: 1117449302587671922
-      Explosion SpriteSheet_30: 4885113214020968659
-      Explosion SpriteSheet_31: 1126774383623124869
-      Explosion SpriteSheet_32: -3613933821256850089
-      Explosion SpriteSheet_33: -2259833671963220548
-      Explosion SpriteSheet_34: -2649641685555676784
-      Explosion SpriteSheet_4: 6910662753779529337
-      Explosion SpriteSheet_5: 9180795563542151505
-      Explosion SpriteSheet_6: 8296492952570185573
-      Explosion SpriteSheet_7: -1189568387140394160
-      Explosion SpriteSheet_8: -2492908855925203694
-      Explosion SpriteSheet_9: -5502693285337484479
+      Fire-bomb_0: 4208818756308097753
+      Fire-bomb_1: 4489344109124849290
+      Fire-bomb_10: -6837003640049841753
+      Fire-bomb_11: -707698820555485553
+      Fire-bomb_12: -7258058271463655723
+      Fire-bomb_13: -4035275178467887856
+      Fire-bomb_14: 1787584209667566989
+      Fire-bomb_15: 3340938464777982908
+      Fire-bomb_16: 6405555079183240730
+      Fire-bomb_17: -1046103120045677387
+      Fire-bomb_18: -5124767337877142459
+      Fire-bomb_19: 1863533442566788447
+      Fire-bomb_2: -1794179056713160445
+      Fire-bomb_20: -514399385027633476
+      Fire-bomb_21: 5547613526103920951
+      Fire-bomb_22: 4439409073706347924
+      Fire-bomb_23: -7990853862577806992
+      Fire-bomb_24: -6293396918043677145
+      Fire-bomb_25: 4527241869461650341
+      Fire-bomb_26: -5645859234125815727
+      Fire-bomb_27: -5699999015142142849
+      Fire-bomb_28: -9068946034712034470
+      Fire-bomb_29: 1679093232474825245
+      Fire-bomb_3: -3069246578231202153
+      Fire-bomb_30: 8442176035622063707
+      Fire-bomb_31: -6882517725819901762
+      Fire-bomb_32: -2701416965854814050
+      Fire-bomb_33: -1178995809826475811
+      Fire-bomb_34: -3270303969894738908
+      Fire-bomb_35: 1061393882198069301
+      Fire-bomb_4: 4868542670144096376
+      Fire-bomb_5: -2188127173522047304
+      Fire-bomb_6: 8155549677376188158
+      Fire-bomb_7: 4983100565292205969
+      Fire-bomb_8: 6589254519269611479
+      Fire-bomb_9: 2335506680206235567
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
