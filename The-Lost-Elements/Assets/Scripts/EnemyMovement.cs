@@ -1,0 +1,60 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class EnemyMovement : MonoBehaviour
+{
+    [SerializeField] private Rigidbody2D rigidBody;
+    [SerializeField] private SpriteRenderer spriteRender;
+    [SerializeField] private Animator animator;   // Added Animator reference
+    [SerializeField] private float speed = 3f;
+    [SerializeField] private int startDirection = 1;
+
+    private int currentDirection;
+    private float halfWidth;
+    private Vector2 movement;
+
+    void Start()
+    {
+        // Auto-assign Animator if not set
+        if (!animator) animator = GetComponent<Animator>();
+
+        halfWidth = spriteRender.bounds.extents.x;
+        currentDirection = startDirection;
+        spriteRender.flipX = startDirection == 1 ? false : true;
+
+        // Start idle animation state
+        animator.SetBool("isRunning", true);
+    }
+
+    void FixedUpdate()
+    {
+        movement.x = speed * currentDirection;
+        movement.y = rigidBody.linearVelocityY;
+        rigidBody.linearVelocity = movement;
+
+        // Update animation based on horizontal speed
+        bool isMoving = Mathf.Abs(rigidBody.linearVelocityX) > 0.05f;
+        animator.SetBool("isRunning", isMoving);
+
+        SetDirection();
+    }
+
+    private void SetDirection()
+    {
+        if (Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground")) &&
+            rigidBody.linearVelocityX > 0)
+        {
+            currentDirection *= -1;
+            spriteRender.flipX = true;
+        }
+        else if (Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) &&
+                 rigidBody.linearVelocityX < 0)
+        {
+            currentDirection *= -1;
+            spriteRender.flipX = false;
+        }
+
+        Debug.DrawRay(transform.position, Vector2.right * (halfWidth + 0.1f), Color.red);
+        Debug.DrawRay(transform.position, Vector2.left * (halfWidth + 0.1f), Color.red);
+    }
+}

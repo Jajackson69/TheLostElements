@@ -7,7 +7,8 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        // Jump when the player presses W
+        if (Input.GetKeyDown(KeyCode.W))
         {
             Jump();
         }
