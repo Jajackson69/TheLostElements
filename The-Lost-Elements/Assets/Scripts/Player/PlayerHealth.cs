@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
         maxHealth = health;
     }
 
-    public void TakeDamage(int damageAmount)
+    public void DamagePlayer(int damageAmount)
     {
         currentHealth -= damageAmount;
         OnPlayerTakeDamage?.Invoke(currentHealth);

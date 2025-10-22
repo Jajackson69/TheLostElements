@@ -5,6 +5,8 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     private GameObject player;
+    public static GameObject CurrentPlayer { get; private set; }
+
     public static Action<GameObject> OnPlayerSpawned;
     private void Awake()
     {

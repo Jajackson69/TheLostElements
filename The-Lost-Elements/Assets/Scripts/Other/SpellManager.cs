@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SpellIconCombiner : MonoBehaviour
 {
@@ -10,17 +11,69 @@ public class SpellIconCombiner : MonoBehaviour
 
     [Header("Spell Prefabs")]
     [SerializeField] private GameObject fireballPrefab;
-    [SerializeField] private Transform firePoint; // Fireball spawn point
+
+    [Header("Runtime refs")]
+    [SerializeField] private Transform firePoint;                 // will be filled at runtime
+    [SerializeField] private string firePointChildName = "FirePoint";
 
     private bool hasFire = false;
     private bool hasWater = false;
     private bool craftedSteam = false;
 
+    void OnEnable()
+    {
+        // hook to player spawn
+        GameController.OnPlayerSpawned += HookPlayerRefs;
+
+        // if player already exists, hook right away
+        if (GameController.CurrentPlayer != null)
+            HookPlayerRefs(GameController.CurrentPlayer);
+        else
+        {
+            // fallback, try find by tag
+            var existing = GameObject.FindGameObjectWithTag("Player");
+            if (existing) HookPlayerRefs(existing);
+        }
+    }
+
+    void OnDisable()
+    {
+        GameController.OnPlayerSpawned -= HookPlayerRefs;
+    }
+
+    private void HookPlayerRefs(GameObject player)
+    {
+        if (player == null) return;
+
+        // find the FirePoint child by name
+        if (firePoint == null)
+        {
+            Transform fp = player.transform.Find(firePointChildName);
+            if (fp == null)
+            {
+                // last resort, scan children
+                foreach (var t in player.GetComponentsInChildren<Transform>(true))
+                {
+                    if (string.Equals(t.name, firePointChildName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        fp = t;
+                        break;
+                    }
+                }
+            }
+
+            firePoint = fp;
+
+            if (firePoint == null)
+                Debug.LogWarning("SpellIconCombiner could not find FirePoint on the Player. Check the child name.");
+        }
+    }
+
     void Start()
     {
-        fireIcon.enabled = false;
-        waterIcon.enabled = false;
-        steamIcon.enabled = false;
+        if (fireIcon)  fireIcon.enabled  = false;
+        if (waterIcon) waterIcon.enabled = false;
+        if (steamIcon) steamIcon.enabled = false;
     }
 
     void Update()
@@ -28,14 +81,14 @@ public class SpellIconCombiner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             hasFire = true;
-            fireIcon.enabled = true;
+            if (fireIcon) fireIcon.enabled = true;
             Debug.Log("🔥 Fire selected");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             hasWater = true;
-            waterIcon.enabled = true;
+            if (waterIcon) waterIcon.enabled = true;
             Debug.Log("💧 Water selected");
         }
 
@@ -44,9 +97,9 @@ public class SpellIconCombiner : MonoBehaviour
             if (hasFire && hasWater)
             {
                 craftedSteam = true;
-                steamIcon.enabled = true;
-                fireIcon.enabled = false;
-                waterIcon.enabled = false;
+                if (steamIcon) steamIcon.enabled = true;
+                if (fireIcon)  fireIcon.enabled  = false;
+                if (waterIcon) waterIcon.enabled = false;
 
                 hasFire = false;
                 hasWater = false;
@@ -61,46 +114,41 @@ public class SpellIconCombiner : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (craftedSteam)
-            {
-                CastSteamBurst();
-            }
-            else
-            {
-                Debug.Log("⚠️ No crafted ability!");
-            }
+            if (craftedSteam) CastSteamBurst();
+            else Debug.Log("⚠️ No crafted ability!");
         }
     }
 
     void CastSteamBurst()
     {
+        if (!fireballPrefab || !firePoint)
+        {
+            Debug.LogWarning("Steam cast skipped, missing prefab or FirePoint.");
+            return;
+        }
+
         Debug.Log("☁️ Casted Steam Burst!");
         craftedSteam = false;
-        steamIcon.enabled = false;
+        if (steamIcon) steamIcon.enabled = false;
 
-        if (fireballPrefab != null && firePoint != null)
+        // spawn fireball
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+
+        // direction to mouse
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0f;
+        Vector2 dir = (mouseWorld - firePoint.position).normalized;
+
+        // push projectile
+        var rb = fireball.GetComponent<Rigidbody2D>();
+        if (rb)
         {
-            // Spawn fireball
-            GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-
-            // Calculate direction towards mouse
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorld.z = 0f; // keep in 2D
-            Vector2 direction = (mouseWorld - firePoint.position).normalized;
-
-            // Apply velocity
-            Rigidbody2D rb = fireball.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.gravityScale = 0f;
-                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                rb.linearVelocity = direction * 10f; // speed 10
-            }
-
-            // Rotate fireball to face direction (optional)
-            fireball.transform.right = direction;
-
-            Destroy(fireball, 3f); // clean up after 3 seconds
+            rb.gravityScale = 0f;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            rb.linearVelocity = dir * 10f;   // speed
         }
+
+        fireball.transform.right = dir;  // face direction
+        Destroy(fireball, 3f);
     }
 }

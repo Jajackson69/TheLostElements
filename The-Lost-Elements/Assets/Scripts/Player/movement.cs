@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody2D rigidBody;
 
     private Vector2 movement;
     private Vector2 screenBounds;
@@ -41,6 +42,14 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement);
 
         animator.SetBool("isRunning", input != 0f);
+    }
+
+    public void KnockbackPlayer(Vector2 knockbackForce, int direction)
+    {
+        knockbackForce.x *= direction;
+        rigidBody.linearVelocity = Vector2.zero;
+        rigidBody.angularVelocity = 0f;
+        rigidBody.AddForce(knockbackForce, ForceMode2D.Impulse);
     }
 
     private void ClampMovement()

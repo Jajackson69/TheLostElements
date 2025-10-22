@@ -1600,63 +1600,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 736042210}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1136799736
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 341700131573974808, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.3572133
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.91047364
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
 --- !u!1 &1210824569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +1833,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 627999648191106806, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -1957,7 +1900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445356e1ef672564495bbc1fcdd915ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameController
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 341700131573974808, guid: a000e5b646deaa34f82affcf5d641060, type: 3}
 --- !u!4 &1786272345
 Transform:
   m_ObjectHideFlags: 0
@@ -2137,9 +2080,10 @@ GameObject:
   - component: {fileID: 2112728661}
   - component: {fileID: 2112728666}
   - component: {fileID: 2112728667}
+  - component: {fileID: 2112728668}
   m_Layer: 0
   m_Name: ENEMY
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2329,6 +2273,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.32, y: 0.34}
   m_EdgeRadius: 0
+--- !u!114 &2112728668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112728660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bed9d20c3a41549b9244c26fa7f086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  knockbackToSelf: {x: 3, y: 5}
+  knockbackToPlayer: {x: 3, y: 5}
+  knockbackDelayToSelf: 1.5
+  damage: 3
 --- !u!1 &2113564166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,6 +2338,7 @@ MonoBehaviour:
   steamIcon: {fileID: 1210824571}
   fireballPrefab: {fileID: 90484658}
   firePoint: {fileID: 0}
+  firePointChildName: FirePoint
 --- !u!1 &2122872028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,4 +2490,3 @@ SceneRoots:
   - {fileID: 111094298}
   - {fileID: 259783636}
   - {fileID: 2112728665}
-  - {fileID: 1136799736}

@@ -38,6 +38,15 @@ public class EnemyMovement : MonoBehaviour
 
         SetDirection();
     }
+        
+
+    public void KnockbackEnemy(Vector2 knockbackForce, int direction)
+    {
+        knockbackForce.x *= direction;
+        rigidBody.linearVelocity = Vector2.zero;
+        rigidBody.angularVelocity = 0f;
+        rigidBody.AddForce(knockbackForce, ForceMode2D.Impulse);
+    }
 
     private void SetDirection()
     {
