@@ -256,13 +256,40 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""New action map"",
+            ""name"": ""Spells"",
             ""id"": ""da34c27d-d6f2-48b6-83a9-18beffec7719"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""53174169-de08-497a-8518-567103a24d2d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Water"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb92d27d-9d56-4f0f-806f-1fcf91fab427"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Combine"",
+                    ""type"": ""Button"",
+                    ""id"": ""2477b23f-7168-4ce3-9a1c-bd56ab331b16"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cast"",
+                    ""type"": ""Button"",
+                    ""id"": ""48fddaaa-b578-4b9f-8c6d-7a2cd5abdc60"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -273,11 +300,44 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""392ddca2-eb1e-4a26-b202-3b9237550600"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d241c07a-7c5e-4cae-bb18-e331b283f3f1"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Water"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a54ea71a-1daf-4ab3-bbe4-8bff45c26b38"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Combine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12a3bbeb-002c-45c5-928c-b2eb118bef59"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -291,15 +351,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        // New action map
-        m_Newactionmap = asset.FindActionMap("New action map", throwIfNotFound: true);
-        m_Newactionmap_Newaction = m_Newactionmap.FindAction("New action", throwIfNotFound: true);
+        // Spells
+        m_Spells = asset.FindActionMap("Spells", throwIfNotFound: true);
+        m_Spells_Fire = m_Spells.FindAction("Fire", throwIfNotFound: true);
+        m_Spells_Water = m_Spells.FindAction("Water", throwIfNotFound: true);
+        m_Spells_Combine = m_Spells.FindAction("Combine", throwIfNotFound: true);
+        m_Spells_Cast = m_Spells.FindAction("Cast", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerControls.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Newactionmap.enabled, "This will cause a leak and performance issues, PlayerControls.Newactionmap.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Spells.enabled, "This will cause a leak and performance issues, PlayerControls.Spells.Disable() has not been called.");
     }
 
     /// <summary>
@@ -490,29 +553,44 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
 
-    // New action map
-    private readonly InputActionMap m_Newactionmap;
-    private List<INewactionmapActions> m_NewactionmapActionsCallbackInterfaces = new List<INewactionmapActions>();
-    private readonly InputAction m_Newactionmap_Newaction;
+    // Spells
+    private readonly InputActionMap m_Spells;
+    private List<ISpellsActions> m_SpellsActionsCallbackInterfaces = new List<ISpellsActions>();
+    private readonly InputAction m_Spells_Fire;
+    private readonly InputAction m_Spells_Water;
+    private readonly InputAction m_Spells_Combine;
+    private readonly InputAction m_Spells_Cast;
     /// <summary>
-    /// Provides access to input actions defined in input action map "New action map".
+    /// Provides access to input actions defined in input action map "Spells".
     /// </summary>
-    public struct NewactionmapActions
+    public struct SpellsActions
     {
         private @PlayerControls m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public NewactionmapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public SpellsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Newactionmap/Newaction".
+        /// Provides access to the underlying input action "Spells/Fire".
         /// </summary>
-        public InputAction @Newaction => m_Wrapper.m_Newactionmap_Newaction;
+        public InputAction @Fire => m_Wrapper.m_Spells_Fire;
+        /// <summary>
+        /// Provides access to the underlying input action "Spells/Water".
+        /// </summary>
+        public InputAction @Water => m_Wrapper.m_Spells_Water;
+        /// <summary>
+        /// Provides access to the underlying input action "Spells/Combine".
+        /// </summary>
+        public InputAction @Combine => m_Wrapper.m_Spells_Combine;
+        /// <summary>
+        /// Provides access to the underlying input action "Spells/Cast".
+        /// </summary>
+        public InputAction @Cast => m_Wrapper.m_Spells_Cast;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Newactionmap; }
+        public InputActionMap Get() { return m_Wrapper.m_Spells; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -520,9 +598,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="NewactionmapActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SpellsActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(NewactionmapActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SpellsActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -530,14 +608,23 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="NewactionmapActions" />
-        public void AddCallbacks(INewactionmapActions instance)
+        /// <seealso cref="SpellsActions" />
+        public void AddCallbacks(ISpellsActions instance)
         {
-            if (instance == null || m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            if (instance == null || m_Wrapper.m_SpellsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SpellsActionsCallbackInterfaces.Add(instance);
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
+            @Water.started += instance.OnWater;
+            @Water.performed += instance.OnWater;
+            @Water.canceled += instance.OnWater;
+            @Combine.started += instance.OnCombine;
+            @Combine.performed += instance.OnCombine;
+            @Combine.canceled += instance.OnCombine;
+            @Cast.started += instance.OnCast;
+            @Cast.performed += instance.OnCast;
+            @Cast.canceled += instance.OnCast;
         }
 
         /// <summary>
@@ -546,21 +633,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="NewactionmapActions" />
-        private void UnregisterCallbacks(INewactionmapActions instance)
+        /// <seealso cref="SpellsActions" />
+        private void UnregisterCallbacks(ISpellsActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
+            @Water.started -= instance.OnWater;
+            @Water.performed -= instance.OnWater;
+            @Water.canceled -= instance.OnWater;
+            @Combine.started -= instance.OnCombine;
+            @Combine.performed -= instance.OnCombine;
+            @Combine.canceled -= instance.OnCombine;
+            @Cast.started -= instance.OnCast;
+            @Cast.performed -= instance.OnCast;
+            @Cast.canceled -= instance.OnCast;
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="NewactionmapActions.UnregisterCallbacks(INewactionmapActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SpellsActions.UnregisterCallbacks(ISpellsActions)" />.
         /// </summary>
-        /// <seealso cref="NewactionmapActions.UnregisterCallbacks(INewactionmapActions)" />
-        public void RemoveCallbacks(INewactionmapActions instance)
+        /// <seealso cref="SpellsActions.UnregisterCallbacks(ISpellsActions)" />
+        public void RemoveCallbacks(ISpellsActions instance)
         {
-            if (m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SpellsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -570,21 +666,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="NewactionmapActions.AddCallbacks(INewactionmapActions)" />
-        /// <seealso cref="NewactionmapActions.RemoveCallbacks(INewactionmapActions)" />
-        /// <seealso cref="NewactionmapActions.UnregisterCallbacks(INewactionmapActions)" />
-        public void SetCallbacks(INewactionmapActions instance)
+        /// <seealso cref="SpellsActions.AddCallbacks(ISpellsActions)" />
+        /// <seealso cref="SpellsActions.RemoveCallbacks(ISpellsActions)" />
+        /// <seealso cref="SpellsActions.UnregisterCallbacks(ISpellsActions)" />
+        public void SetCallbacks(ISpellsActions instance)
         {
-            foreach (var item in m_Wrapper.m_NewactionmapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SpellsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_NewactionmapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SpellsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="NewactionmapActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SpellsActions" /> instance referencing this action map.
     /// </summary>
-    public NewactionmapActions @Newactionmap => new NewactionmapActions(this);
+    public SpellsActions @Spells => new SpellsActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -615,18 +711,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "New action map" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Spells" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="NewactionmapActions.AddCallbacks(INewactionmapActions)" />
-    /// <seealso cref="NewactionmapActions.RemoveCallbacks(INewactionmapActions)" />
-    public interface INewactionmapActions
+    /// <seealso cref="SpellsActions.AddCallbacks(ISpellsActions)" />
+    /// <seealso cref="SpellsActions.RemoveCallbacks(ISpellsActions)" />
+    public interface ISpellsActions
     {
         /// <summary>
-        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Water" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnWater(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Combine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCombine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Cast" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCast(InputAction.CallbackContext context);
     }
 }

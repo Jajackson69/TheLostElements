@@ -170,13 +170,40 @@
             ]
         },
         {
-            "name": "New action map",
+            "name": "Spells",
             "id": "da34c27d-d6f2-48b6-83a9-18beffec7719",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Fire",
                     "type": "Button",
                     "id": "53174169-de08-497a-8518-567103a24d2d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Water",
+                    "type": "Button",
+                    "id": "cb92d27d-9d56-4f0f-806f-1fcf91fab427",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Combine",
+                    "type": "Button",
+                    "id": "2477b23f-7168-4ce3-9a1c-bd56ab331b16",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cast",
+                    "type": "Button",
+                    "id": "48fddaaa-b578-4b9f-8c6d-7a2cd5abdc60",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -187,11 +214,44 @@
                 {
                     "name": "",
                     "id": "392ddca2-eb1e-4a26-b202-3b9237550600",
-                    "path": "",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d241c07a-7c5e-4cae-bb18-e331b283f3f1",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Water",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a54ea71a-1daf-4ab3-bbe4-8bff45c26b38",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Combine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12a3bbeb-002c-45c5-928c-b2eb118bef59",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

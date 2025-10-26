@@ -41,5 +41,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background6
+    uniqueID: 959374917
+    locked: 0
+  - name: Background5
+    uniqueID: 3890590003
+    locked: 0
+  - name: Background4
+    uniqueID: 354318015
+    locked: 0
+  - name: Background3
+    uniqueID: 1014529477
+    locked: 0
+  - name: Background2
+    uniqueID: 1748519945
+    locked: 0
+  - name: Background1
+    uniqueID: 731646265
+    locked: 0
+  - name: Game
+    uniqueID: 41519229
+    locked: 0
   m_RenderingLayers:
   - Default

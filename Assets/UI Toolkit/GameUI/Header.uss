@@ -1,0 +1,21 @@
+.header {
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+}
+
+.menubutton {
+    font-size: 40px;
+    color: rgb(239, 255, 237);
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-size: 30% 100%;
+    background-position-y: top 0;
+    background-position-x: left 10px;
+    -unity-text-outline-width: 0.5px;
+}
