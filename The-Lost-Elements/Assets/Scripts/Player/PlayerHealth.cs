@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth { get; private set; }
     public int maxHealth { get; private set; }
     public static Action<int> OnPlayerTakeDamage;
+    public static Action OnPlayerDeath;
     // Start is called once before the firdt execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -21,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
         OnPlayerTakeDamage?.Invoke(currentHealth);
         if (currentHealth <= 0)
         {
+            OnPlayerDeath.Invoke();
             Destroy(gameObject);
         }
     }

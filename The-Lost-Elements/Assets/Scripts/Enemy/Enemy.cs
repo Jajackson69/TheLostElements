@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector2 knockbackToSelf = new Vector2(3f, 5f);
     [SerializeField] private Vector2 knockbackToPlayer = new Vector2(3f, 5f);
     [SerializeField] private int damage = 3;
+    
 
     public void Die()
     {
