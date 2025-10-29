@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     public float firePointRadius = 0.6f;
 
     private float lastXPos;
-
     public PlayerControls Controls => controls;
 
     private void Awake()
@@ -46,7 +45,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-
         currentHealth = maxHealth;
     }
 
@@ -70,20 +68,47 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Vérifie si le joueur touche le sol
+        // Check if grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Applique le mouvement horizontal
+        // Apply horizontal movement
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
         // Animation "isRunning"
         animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
 
-        // Flip le sprite selon la direction
+        // 🟢 Update jump/fall state animations
+        UpdateJumpAndFallAnimations();
+
+        // Flip the sprite
         FlipSprite();
 
-        // Positionne et oriente le FirePoint vers la souris
+        // Update FirePoint
         UpdateFirePoint();
+    }
+
+    private void UpdateJumpAndFallAnimations()
+    {
+        float velY = rb.linearVelocity.y;
+
+        // Going up
+        if (!isGrounded && velY > 0.1f)
+        {
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isFalling", false);
+        }
+        // Falling down
+        else if (!isGrounded && velY < -0.1f)
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
+        // Landed
+        else if (isGrounded)
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", false);
+        }
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -96,6 +121,8 @@ public class PlayerController : MonoBehaviour
         if (context.performed && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            // 🟢 Immediately trigger jump animation
+            animator.SetBool("isJumping", true);
         }
     }
 
@@ -125,10 +152,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         mouseWorld.z = 0f;
-
         Vector3 dir = (mouseWorld - transform.position).normalized;
-        firePoint.position = transform.position + dir * firePointRadius;
 
+        firePoint.position = transform.position + dir * firePointRadius;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
@@ -146,7 +172,7 @@ public class PlayerController : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy == null) return;
 
-        // Si on tombe sur l'ennemi
+        // If the player lands on the enemy
         if (Physics2D.Raycast(transform.position, Vector2.down, spriteRenderer.bounds.extents.y + 0.1f, LayerMask.GetMask("Enemy")))
         {
             Vector2 velocity = rb.linearVelocity;
@@ -170,11 +196,8 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         OnPlayerTakeDamage?.Invoke(currentHealth);
-
         if (currentHealth <= 0)
-        {
             Destroy(gameObject);
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -184,12 +207,10 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
-
         if (firePoint != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(firePoint.position, 0.1f);
         }
     }
-} 
-
+}
