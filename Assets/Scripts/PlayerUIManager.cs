@@ -14,6 +14,12 @@ public class MainMenuController : MonoBehaviour
     [Header("Référence du prefab UI-Hover Arrows")]
     [SerializeField] private GameObject uiHoverArrows;
 
+    [Header("UI - Credits Panel")]
+    [SerializeField] private GameObject creditsUIPrefab;
+    private GameObject spawnedCreditsUI;
+
+
+
     [Header("Positions Y pour chaque bouton")]
     [SerializeField] private float playY = 1.329f;
     [SerializeField] private float offsetY = -1.279f; // Différence de hauteur entre chaque bouton
@@ -88,10 +94,47 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Settings button clicked");
     }
 
-    private void OnCreditsClicked()
+   private void OnCreditsClicked()
+{
+    Debug.Log("Credits button clicked");
+
+    if (creditsUIPrefab == null)
     {
-        Debug.Log("Credits button clicked");
+        Debug.LogWarning("Aucun prefab UI Credits assigné !");
+        return;
     }
+
+    // Si déjà affiché, on évite de le recréer
+    if (spawnedCreditsUI != null)
+    {
+        Debug.Log("UI Credits déjà affiché.");
+        return;
+    }
+
+    // Trouver le Canvas dans la scène
+    Canvas canvas = FindObjectOfType<Canvas>();
+    if (canvas == null)
+    {
+        Debug.LogError("Aucun Canvas trouvé dans la scène !");
+        return;
+    }
+
+    // Créer le UI sous le Canvas
+    spawnedCreditsUI = Instantiate(creditsUIPrefab, canvas.transform);
+
+    // Placer le panneau à la position souhaitée
+    RectTransform rect = spawnedCreditsUI.GetComponent<RectTransform>();
+    if (rect != null)
+    {
+        rect.anchoredPosition = new Vector2(-960.0067f, -540.0221f);
+    }
+    else
+    {
+        spawnedCreditsUI.transform.localPosition = new Vector3(-960.0067f, -540.0221f, 0);
+    }
+}
+
+
 
     private void OnQuitClicked()
     {

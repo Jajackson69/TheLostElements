@@ -1568,6 +1568,7 @@ MonoBehaviour:
   creditsButton: {fileID: 1776582641}
   quitButton: {fileID: 1610485779}
   uiHoverArrows: {fileID: 1584943347}
+  creditsUIPrefab: {fileID: 4812582367200090450, guid: 5d56d8c1938bceb44a6d3c32804b4e8c, type: 3}
   playY: 1.329
   offsetY: -1.279
 --- !u!4 &1331605278

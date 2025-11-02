@@ -33,10 +33,12 @@ public class PlayerController : MonoBehaviour
     public float bounceForceMultiplier = 1.3f;
 
     [Header("Fire Point Settings")]
-    public Transform firePoint;
-    public float firePointRadius = 0.6f;
+    public Transform firePointRight;
+    public Transform firePointLeft;
+    public Transform firePointMiddle; 
 
-    private float lastXPos;
+    [HideInInspector] public Transform currentFirePoint;
+
     public PlayerControls Controls => controls;
 
     private void Awake()
@@ -46,6 +48,10 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+
+        // Default firepoint
+        if (firePointRight != null)
+            currentFirePoint = firePointRight;
     }
 
     private void OnEnable()
@@ -68,42 +74,36 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Check if grounded
+        // Ground check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Apply horizontal movement
+        // Move
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
-        // Animation "isRunning"
+        // Animation: running
         animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
 
-        // 🟢 Update jump/fall state animations
+        // Jump/fall animations
         UpdateJumpAndFallAnimations();
 
-        // Flip the sprite
+        // Handle facing direction and firepoint
         FlipSprite();
-
-        // Update FirePoint
-        UpdateFirePoint();
     }
 
     private void UpdateJumpAndFallAnimations()
     {
         float velY = rb.linearVelocity.y;
 
-        // Going up
         if (!isGrounded && velY > 0.1f)
         {
             animator.SetBool("isJumping", true);
             animator.SetBool("isFalling", false);
         }
-        // Falling down
         else if (!isGrounded && velY < -0.1f)
         {
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", true);
         }
-        // Landed
         else if (isGrounded)
         {
             animator.SetBool("isJumping", false);
@@ -121,42 +121,30 @@ public class PlayerController : MonoBehaviour
         if (context.performed && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            // 🟢 Immediately trigger jump animation
             animator.SetBool("isJumping", true);
         }
     }
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack!");
         animator.SetTrigger("attack");
     }
 
+    // 🔁 Flip direction & switch current firepoint (no disabling!)
     private void FlipSprite()
     {
         if (moveInput.x > 0.05f && !facingRight)
         {
             facingRight = true;
             spriteRenderer.flipX = false;
+            currentFirePoint = firePointRight;
         }
         else if (moveInput.x < -0.05f && facingRight)
         {
             facingRight = false;
             spriteRenderer.flipX = true;
+            currentFirePoint = firePointLeft;
         }
-    }
-
-    private void UpdateFirePoint()
-    {
-        if (firePoint == null) return;
-
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mouseWorld.z = 0f;
-        Vector3 dir = (mouseWorld - transform.position).normalized;
-
-        firePoint.position = transform.position + dir * firePointRadius;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -172,7 +160,6 @@ public class PlayerController : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy == null) return;
 
-        // If the player lands on the enemy
         if (Physics2D.Raycast(transform.position, Vector2.down, spriteRenderer.bounds.extents.y + 0.1f, LayerMask.GetMask("Enemy")))
         {
             Vector2 velocity = rb.linearVelocity;
@@ -207,10 +194,17 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
-        if (firePoint != null)
+
+        if (firePointRight != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(firePoint.position, 0.1f);
+            Gizmos.DrawWireSphere(firePointRight.position, 0.1f);
+        }
+
+        if (firePointLeft != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(firePointLeft.position, 0.1f);
         }
     }
 }
