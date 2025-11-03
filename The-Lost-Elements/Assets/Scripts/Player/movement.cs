@@ -8,10 +8,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rigidBody;
 
+    [Header("Attack Settings")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform firePoint;
+
     private Vector2 movement;
     private Vector2 screenBounds;
     private float playerHalfWidth;
     private float xPosLastFrame;
+    private bool isAttacking = false;
 
     private void Awake()
     {
@@ -30,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleMovement();
+        HandleAttack(); // 👈 Added this line
         ClampMovement();
         FlipCharacter();
     }
@@ -42,6 +48,31 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement);
 
         animator.SetBool("isRunning", input != 0f);
+    }
+
+    private void HandleAttack()
+    {
+        // Left Mouse Button (M1) starts attack animation
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        {
+            isAttacking = true;
+            animator.SetTrigger("Attack");
+        }
+    }
+
+    // Called by Animation Event at the "release" frame
+    public void SpawnProjectile()
+    {
+        if (projectilePrefab && firePoint)
+        {
+            Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        }
+    }
+
+    // Called by Animation Event at the end of Attack animation
+    public void EndAttack()
+    {
+        isAttacking = false;
     }
 
     public void KnockbackPlayer(Vector2 knockbackForce, int direction)
