@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleMovement();
         HandleAttack(); // 👈 Added this line
-        ClampMovement();
+        // ClampMovement();
         FlipCharacter();
     }
 
@@ -83,18 +83,18 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(knockbackForce, ForceMode2D.Impulse);
     }
 
-    private void ClampMovement()
-    {
-        float clampedX = Mathf.Clamp(
-            transform.position.x,
-            -screenBounds.x + playerHalfWidth,
-            screenBounds.x - playerHalfWidth
-        );
+    // private void ClampMovement()
+    // {
+    //     float clampedX = Mathf.Clamp(
+    //         transform.position.x,
+    //         -screenBounds.x + playerHalfWidth,
+    //         screenBounds.x - playerHalfWidth
+    //     );
 
-        Vector3 pos = transform.position;
-        pos.x = clampedX;
-        transform.position = pos;
-    }
+    //     Vector3 pos = transform.position;
+    //     pos.x = clampedX;
+    //     transform.position = pos;
+    // }
 
     private void FlipCharacter()
     {

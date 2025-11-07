@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8177751304280166950}
   - component: {fileID: 4275053098029836066}
   - component: {fileID: 4488127926190993031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -35,8 +35,8 @@ Transform:
   m_GameObject: {fileID: 341700131573974808}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.72, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.1696, y: -0.4671, z: 0}
+  m_LocalScale: {x: 1.5747435, y: 1.5747435, z: 1.5747435}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8129443241840068033}
@@ -193,7 +193,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.59, y: 0.88}
+  m_Size: {x: 0.59, y: 0.84}
   m_EdgeRadius: 0
 --- !u!114 &981750968845527260
 MonoBehaviour:
@@ -211,6 +211,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2766643304798492606}
   animator: {fileID: 1947547990314641325}
   rigidBody: {fileID: 6552655514501101356}
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!114 &3687269510206212061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8129443241840068033}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
