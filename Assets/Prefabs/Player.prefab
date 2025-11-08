@@ -214,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 6997641802566135863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7354532, y: -4.623412, z: 0}
+  m_LocalPosition: {x: 5.9212475, y: -1.6463304, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -403,6 +403,7 @@ MonoBehaviour:
   firePointLeft: {fileID: 5766775401286518465}
   firePointMiddle: {fileID: 4512568497854647725}
   currentFirePoint: {fileID: 0}
+  fairyController: {fileID: 3426645954661550262, guid: aeae7bb8b9eb3a64da93bc79dcaaa00e, type: 3}
 --- !u!114 &-5214586956519012076
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9006148dedcbea4489327f50030ac760
+guid: 27028ac4d12246b45bcdcb127bd1db49
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2358529259863307545
-    second: TheLostElements_image_0
+      213: 3149766158179804050
+    second: RHOMBUS-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TheLostElements_image_0
+      name: RHOMBUS-removebg-preview_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1200
-        height: 1200
+        y: 45
+        width: 225
+        height: 135
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ea8b795222d44fd0800000000000000
-      internalID: -2358529259863307545
+      spriteID: 293aad7f1a736bb20800000000000000
+      internalID: 3149766158179804050
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TheLostElements_image_0: -2358529259863307545
+      RHOMBUS-removebg-preview_0: 3149766158179804050
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Transform currentFirePoint;
 
+    [Header("Chat Settings")]
+    [SerializeField] private Fairy fairyController;
+    [SerializeField] private DialogueSystem dialogueSystem;
+
+
     public PlayerControls Controls => controls;
 
     private void Awake()
@@ -49,7 +54,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
 
-        // Default firepoint
         if (firePointRight != null)
             currentFirePoint = firePointRight;
     }
@@ -61,6 +65,7 @@ public class PlayerController : MonoBehaviour
         controls.Player.Move.canceled += OnMove;
         controls.Player.Jump.performed += OnJump;
         controls.Player.Attack.performed += OnAttack;
+        controls.Player.SpawnChat.performed += OnSpawnChat;
     }
 
     private void OnDisable()
@@ -69,24 +74,16 @@ public class PlayerController : MonoBehaviour
         controls.Player.Move.canceled -= OnMove;
         controls.Player.Jump.performed -= OnJump;
         controls.Player.Attack.performed -= OnAttack;
+        controls.Player.SpawnChat.performed -= OnSpawnChat;
         controls.Player.Disable();
     }
 
     private void Update()
     {
-        // Ground check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        // Move
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-
-        // Animation: running
         animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
-
-        // Jump/fall animations
         UpdateJumpAndFallAnimations();
-
-        // Handle facing direction and firepoint
         FlipSprite();
     }
 
@@ -117,20 +114,30 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnJump(InputAction.CallbackContext context)
+{
+    if (context.performed && isGrounded)
     {
-        if (context.performed && isGrounded)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            animator.SetBool("isJumping", true);
-        }
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        animator.SetBool("isJumping", true);
+
+        if (dialogueSystem != null)
+            dialogueSystem.AdvanceFromAction("Jump");
     }
+}
+
 
     private void OnAttack(InputAction.CallbackContext context)
     {
         animator.SetTrigger("attack");
     }
 
-    // 🔁 Flip direction & switch current firepoint (no disabling!)
+    private void OnSpawnChat(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        if (fairyController == null) return;
+        fairyController.SpawnBubble();
+    }
+
     private void FlipSprite()
     {
         if (moveInput.x > 0.05f && !facingRight)

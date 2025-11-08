@@ -21,58 +21,36 @@ public class SpellIconCombiner : MonoBehaviour
     private bool hasWater = false;
     private bool craftedSteam = false;
 
-    // Reference to the PlayerController's Input System
     private PlayerControls controls;
 
     private void OnEnable()
     {
-        GameController.OnPlayerSpawned += HookPlayer;
-
-        // If player already exists, hook immediately
-        if (GameController.CurrentPlayer != null)
-            HookPlayer(GameController.CurrentPlayer);
-    }
-
-    private void OnDisable()
-    {
-        if (controls != null)
-        {
-            // Unbind actions
-            controls.Spells.Fire.performed -= OnFireSelect;
-            controls.Spells.Water.performed -= OnWaterSelect;
-            controls.Spells.Combine.performed -= OnCombine;
-            controls.Spells.Cast.performed -= OnCast;
-        }
-
-        GameController.OnPlayerSpawned -= HookPlayer;
-    }
-
-    private void HookPlayer(GameObject player)
-    {
-        if (player == null) return;
-
-        // Grab the PlayerController and its controls
-        var playerController = player.GetComponent<PlayerController>();
-        if (playerController == null) return;
-
-        controls = playerController.Controls;
-
-        // Enable the Spells map only
+        controls = new PlayerControls();
         controls.Spells.Enable();
 
-        // Bind the spell actions
         controls.Spells.Fire.performed += OnFireSelect;
         controls.Spells.Water.performed += OnWaterSelect;
         controls.Spells.Combine.performed += OnCombine;
         controls.Spells.Cast.performed += OnCast;
+    }
 
-        // Find FirePoint
+    private void OnDisable()
+    {
+        controls.Spells.Fire.performed -= OnFireSelect;
+        controls.Spells.Water.performed -= OnWaterSelect;
+        controls.Spells.Combine.performed -= OnCombine;
+        controls.Spells.Cast.performed -= OnCast;
+        controls.Spells.Disable();
+    }
+
+    private void Start()
+    {
         if (firePoint == null)
         {
-            Transform fp = player.transform.Find(firePointChildName);
+            Transform fp = transform.Find(firePointChildName);
             if (fp == null)
             {
-                foreach (var t in player.GetComponentsInChildren<Transform>(true))
+                foreach (var t in GetComponentsInChildren<Transform>(true))
                 {
                     if (string.Equals(t.name, firePointChildName, StringComparison.OrdinalIgnoreCase))
                     {
@@ -84,7 +62,7 @@ public class SpellIconCombiner : MonoBehaviour
             firePoint = fp;
 
             if (firePoint == null)
-                Debug.LogWarning("SpellIconCombiner could not find FirePoint on the Player. Check the child name.");
+                Debug.LogWarning("SpellIconCombiner could not find FirePoint. Check the child name.");
         }
     }
 
@@ -129,7 +107,6 @@ public class SpellIconCombiner : MonoBehaviour
         else
             Debug.Log("⚠️ No crafted ability!");
     }
-
 
     private void CastSteamBurst()
     {
