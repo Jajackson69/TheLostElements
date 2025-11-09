@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,7 +11,6 @@ public class ElementVFXManager : MonoBehaviour
         public string elementName;
         public GameObject prefab;
         public VFXAnchorType anchorType = VFXAnchorType.Auto;
-
         [HideInInspector] public GameObject instance;
         [HideInInspector] public Transform currentParent;
         [HideInInspector] public int tapCount = 0;
@@ -29,11 +29,7 @@ public class ElementVFXManager : MonoBehaviour
         public VFXAnchorType anchorType = VFXAnchorType.Auto;
     }
 
-    public enum VFXAnchorType
-    {
-        Auto,
-        Middle
-    }
+    public enum VFXAnchorType { Auto, Middle }
 
     [Header("References")]
     public PlayerController player;
@@ -48,32 +44,39 @@ public class ElementVFXManager : MonoBehaviour
     public Vector3 offset = Vector3.zero;
     public float doubleTapDelay = 0.4f;
 
-    private Dictionary<Key, int> keyToIndex;
+    private PlayerControls controls;
+    public static event Action<string> OnElementActivated;
 
-    private void Awake()
-    {
-        keyToIndex = new Dictionary<Key, int>()
-        {
-            { Key.Digit1, 0 },
-            { Key.Digit2, 1 },
-            { Key.Digit3, 2 },
-            { Key.Digit4, 3 }
-        };
-    }
+   private void Awake()
+{
+    if (controls == null)
+        controls = new PlayerControls();
+}
 
-    private void Update()
-    {
-        if (player == null) return;
+private void OnEnable()
+{
+    if (controls == null) return;
 
-        foreach (var kvp in keyToIndex)
-            if (Keyboard.current[kvp.Key].wasPressedThisFrame)
-                HandleTap(kvp.Value);
+    controls.Player.Enable();
+    controls.Player.Element1.performed += ctx => OnElementPressed(0);
+    controls.Player.Element2.performed += ctx => OnElementPressed(1);
+    controls.Player.Element3.performed += ctx => OnElementPressed(2);
+    controls.Player.Element4.performed += ctx => OnElementPressed(3);
+}
 
-        UpdateVFXPositions();
-        CheckForFusion();
-    }
+private void OnDisable()
+{
+    if (controls == null) return;
 
-    private void HandleTap(int index)
+    controls.Player.Element1.performed -= ctx => OnElementPressed(0);
+    controls.Player.Element2.performed -= ctx => OnElementPressed(1);
+    controls.Player.Element3.performed -= ctx => OnElementPressed(2);
+    controls.Player.Element4.performed -= ctx => OnElementPressed(3);
+    controls.Player.Disable();
+}
+
+
+    private void OnElementPressed(int index)
     {
         if (index < 0 || index >= elementVFXs.Count) return;
         ElementVFX e = elementVFXs[index];
@@ -90,38 +93,40 @@ public class ElementVFXManager : MonoBehaviour
                 return;
             }
         }
-        else
-        {
-            e.tapCount = 1;
-        }
+        else e.tapCount = 1;
+
         e.lastTapTime = now;
 
         if (e.instance == null) ActivateVFX(e);
         else DeactivateVFX(e);
     }
 
-    private void ActivateVFX(ElementVFX e)
-    {
-        Transform anchor = GetAnchor(e.anchorType);
-        if (anchor == null) return;
+   private void ActivateVFX(ElementVFX e)
+{
+    Transform anchor = GetAnchor(e.anchorType);
+    if (anchor == null) return;
 
-        e.currentParent = anchor;
-        e.activeAnchorType = e.anchorType;
-        Vector3 spawnPos = anchor.position + offset;
+    e.currentParent = anchor;
+    e.activeAnchorType = e.anchorType;
+    Vector3 spawnPos = anchor.position + offset;
 
-        e.instance = Instantiate(e.prefab, spawnPos, anchor.rotation, anchor);
-        SetLocalParticleMode(e.instance);
+    e.instance = Instantiate(e.prefab, spawnPos, anchor.rotation, anchor);
+    SetLocalParticleMode(e.instance);
+    e.instance.transform.localPosition = offset;
+    e.instance.transform.localRotation = Quaternion.identity;
+    e.activeTag = e.elementName;
+    e.canCrossFuse = true;
 
-        e.instance.transform.localPosition = offset;
-        e.instance.transform.localRotation = Quaternion.identity;
+    EnvironmentReactor.Instance?.UpdateElementHints(e.elementName);
+    OnElementActivated?.Invoke(e.elementName);
 
-        e.activeTag = e.elementName;
-        e.canCrossFuse = true;
+    var dialogue = FindFirstObjectByType<DialogueSystem>();
+    if (dialogue != null)
+        dialogue.AdvanceFromAction(e.elementName);
+}
 
-        Debug.Log($"🟢 Activated {e.elementName} at {anchor.name}");
-    }
 
-    private void DeactivateVFX(ElementVFX e)
+    public void DeactivateVFX(ElementVFX e)
     {
         if (e.instance != null) Destroy(e.instance);
         e.instance = null;
@@ -129,7 +134,7 @@ public class ElementVFXManager : MonoBehaviour
         e.activeTag = null;
         e.canCrossFuse = true;
         e.activeAnchorType = VFXAnchorType.Auto;
-        Debug.Log($"🔴 Deactivated {e.elementName}");
+        EnvironmentReactor.Instance?.UpdateElementHints(null);
     }
 
     private void TrySelfFusion(ElementVFX e)
@@ -137,44 +142,37 @@ public class ElementVFXManager : MonoBehaviour
         string selfTag = e.elementName + "++";
         FusionRule rule = fusionRules.Find(f => f.tagA == e.elementName && f.tagB == e.elementName);
         GameObject prefab = rule != null ? rule.fusionPrefab : e.prefab;
-
         VFXAnchorType finalAnchorType = rule != null ? rule.anchorType : e.anchorType;
         Transform anchor = GetAnchor(finalAnchorType);
-        if (anchor == null)
-        {
-            Debug.LogWarning($"⚠️ No anchor found for {e.elementName} self-fusion!");
-            return;
-        }
+        if (anchor == null) return;
 
         if (e.instance != null) Destroy(e.instance);
-
         Vector3 pos = anchor.position + offset;
         e.instance = Instantiate(prefab, pos, anchor.rotation, anchor);
         SetLocalParticleMode(e.instance);
-
         e.instance.transform.localPosition = offset;
         e.instance.transform.localRotation = Quaternion.identity;
         e.currentParent = anchor;
         e.activeAnchorType = finalAnchorType;
-
         e.activeTag = selfTag;
         e.canCrossFuse = false;
+    }
 
-        Debug.Log($"💧 Self-Fusion: {e.elementName}+{e.elementName} → {prefab.name} on {anchor.name}");
+    private void Update()
+    {
+        UpdateVFXPositions();
+        CheckForFusion();
     }
 
     private void CheckForFusion()
     {
         var active = elementVFXs.FindAll(x => x.instance != null && x.canCrossFuse && !string.IsNullOrEmpty(x.activeTag));
         if (active.Count != 2) return;
-
         string tagA = active[0].activeTag;
         string tagB = active[1].activeTag;
-
         FusionRule rule = fusionRules.Find(f =>
             (f.tagA == tagA && f.tagB == tagB) ||
             (f.tagA == tagB && f.tagB == tagA));
-
         if (rule == null) return;
 
         foreach (var e in active)
@@ -187,15 +185,11 @@ public class ElementVFXManager : MonoBehaviour
 
         Transform anchor = GetAnchor(rule.anchorType);
         if (anchor == null) return;
-
         Vector3 pos = anchor.position + offset;
         GameObject fusionInstance = Instantiate(rule.fusionPrefab, pos, anchor.rotation, anchor);
         SetLocalParticleMode(fusionInstance);
-
         fusionInstance.transform.localPosition = offset;
         fusionInstance.transform.localRotation = Quaternion.identity;
-
-        Debug.Log($"⚡ Fusion {tagA}+{tagB} → {rule.fusionPrefab.name} on {anchor.name}");
     }
 
     private void UpdateVFXPositions()
@@ -203,17 +197,14 @@ public class ElementVFXManager : MonoBehaviour
         foreach (var e in elementVFXs)
         {
             if (e.instance == null) continue;
-
             Transform targetParent = GetAnchor(e.activeAnchorType);
             if (targetParent == null) continue;
-
             if (e.currentParent != targetParent)
             {
                 e.currentParent = targetParent;
                 e.instance.transform.SetParent(targetParent);
                 e.instance.transform.localPosition = offset;
                 e.instance.transform.localRotation = Quaternion.identity;
-                Debug.Log($"🔄 Reattached {e.elementName} to {targetParent.name}");
             }
         }
     }
@@ -235,4 +226,12 @@ public class ElementVFXManager : MonoBehaviour
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
         }
     }
+
+    public void DeactivateElementByName(string elementName)
+    {
+        ElementVFX e = elementVFXs.Find(x => x.elementName == elementName);
+        if (e != null)
+            DeactivateVFX(e);
+    }
+
 }

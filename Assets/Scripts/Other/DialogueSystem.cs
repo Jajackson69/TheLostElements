@@ -13,8 +13,9 @@ public class DialogueLine
 
 public class DialogueSystem : MonoBehaviour
 {
-    [SerializeField] private TMP_Text dialogueText;
-    [SerializeField] private TMP_Text dotsText;
+    [SerializeField] private UnityEngine.UI.Text dialogueText;
+    [SerializeField] private UnityEngine.UI.Text dotsText;
+
     [SerializeField] private DialogueLine[] dialogueLines;
     [SerializeField] private float typingSpeed = 0.03f;
     [SerializeField] private float dotsInterval = 0.4f;
@@ -22,48 +23,51 @@ public class DialogueSystem : MonoBehaviour
     private int currentLineIndex;
     private bool isTyping;
     private bool isComplete;
-    private bool initialized;
     private Coroutine typingCoroutine;
     private Coroutine dotsCoroutine;
     private PlayerControls controls;
+    private bool initialized;
 
     void Awake()
+    {
+        controls = null;
+    }
+
+    void Start()
 {
-    controls = null;
+    StartCoroutine(InitDialogue());
 }
 
-IEnumerator Start()
+IEnumerator InitDialogue()
 {
     yield return null;
     yield return null;
-
     controls = new PlayerControls();
-
     if (dotsText != null) dotsText.text = "";
     if (dialogueText != null) dialogueText.text = "";
-
     controls.Dialogue.Enable();
     controls.Dialogue.Next.performed += OnAdvancePressed;
-
     StartDialogue();
 }
 
 
-    void EnableControls()
-    {
-        controls.Dialogue.Enable();
-        controls.Dialogue.Next.performed += OnAdvancePressed;
-    }
-
     void OnDisable()
     {
-        controls.Dialogue.Next.performed -= OnAdvancePressed;
-        controls.Dialogue.Disable();
+        if (controls != null)
+        {
+            controls.Dialogue.Next.performed -= OnAdvancePressed;
+            controls.Dialogue.Disable();
+        }
     }
-
 
     public void StartDialogue()
     {
+        StartCoroutine(SafeStartDialogue());
+    }
+
+    IEnumerator SafeStartDialogue()
+    {
+        yield return null;
         currentLineIndex = 0;
         DisplayLine();
     }
@@ -78,11 +82,9 @@ IEnumerator Start()
     void OnAdvancePressed(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
-
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
         if (line.requiresAction) return;
-
         InternalAdvance();
     }
 
@@ -93,16 +95,13 @@ IEnumerator Start()
         if (!line.requiresAction) return;
         if (!string.IsNullOrEmpty(line.requiredActionId) && line.requiredActionId != actionId)
             return;
-
         InternalAdvance();
     }
 
     void InternalAdvance()
     {
         if (isTyping)
-        {
             CompleteLineInstantly();
-        }
         else if (isComplete)
         {
             StopDots();
@@ -129,7 +128,6 @@ IEnumerator Start()
     {
         isTyping = true;
         isComplete = false;
-
         dialogueText.text = "";
         StopDots();
 
@@ -141,16 +139,24 @@ IEnumerator Start()
 
         isTyping = false;
         isComplete = true;
-        StartDots();
+
+        if (currentLineIndex < dialogueLines.Length - 1)
+            StartDots();
+        else
+            StartCoroutine(AutoEndAfterDelay());
+    }
+
+    IEnumerator AutoEndAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        EndDialogue();
     }
 
     void StartDots()
     {
         if (dotsText == null) return;
-
         if (dotsCoroutine != null)
             StopCoroutine(dotsCoroutine);
-
         dotsCoroutine = StartCoroutine(DotsLoop());
     }
 
@@ -158,9 +164,7 @@ IEnumerator Start()
     {
         if (dotsCoroutine != null)
             StopCoroutine(dotsCoroutine);
-
         dotsCoroutine = null;
-
         if (dotsText != null)
             dotsText.text = "";
     }
@@ -168,16 +172,13 @@ IEnumerator Start()
     IEnumerator DotsLoop()
     {
         int count = 0;
-
         while (!isTyping && isComplete)
         {
             if (dotsText != null)
                 dotsText.text = new string('.', count);
-
             count = (count + 1) % 4;
             yield return new WaitForSeconds(dotsInterval);
         }
-
         if (dotsText != null)
             dotsText.text = "";
     }
@@ -186,14 +187,16 @@ IEnumerator Start()
     {
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
-
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
-
         dialogueText.text = line.text;
         isTyping = false;
         isComplete = true;
-        StartDots();
+
+        if (currentLineIndex < dialogueLines.Length - 1)
+            StartDots();
+        else
+            StartCoroutine(AutoEndAfterDelay());
     }
 
     void NextLine()
@@ -202,16 +205,21 @@ IEnumerator Start()
         DisplayLine();
     }
 
+    public void StartCustomDialogue(DialogueLine[] newLines)
+    {
+        dialogueLines = newLines;
+        currentLineIndex = 0;
+        gameObject.SetActive(true);
+        StartCoroutine(SafeStartDialogue());
+    }
+
     void EndDialogue()
     {
         isTyping = false;
         isComplete = false;
-
         if (dialogueText != null)
             dialogueText.text = "";
-
         StopDots();
-
         gameObject.SetActive(false);
     }
 }

@@ -36,47 +36,55 @@ public class PlayerController : MonoBehaviour
     public Transform firePointRight;
     public Transform firePointLeft;
     public Transform firePointMiddle; 
-
     [HideInInspector] public Transform currentFirePoint;
 
     [Header("Chat Settings")]
     [SerializeField] private Fairy fairyController;
     [SerializeField] private DialogueSystem dialogueSystem;
 
+    [Header("Magic Settings")]
+    [SerializeField] private ElementVFXManager vfxManager;
 
     public PlayerControls Controls => controls;
 
     private void Awake()
-    {
+{
+    if (controls == null)
         controls = new PlayerControls();
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        currentHealth = maxHealth;
 
-        if (firePointRight != null)
-            currentFirePoint = firePointRight;
-    }
+    rb = GetComponent<Rigidbody2D>();
+    spriteRenderer = GetComponent<SpriteRenderer>();
+    animator = GetComponent<Animator>();
+    currentHealth = maxHealth;
 
-    private void OnEnable()
-    {
-        controls.Player.Enable();
-        controls.Player.Move.performed += OnMove;
-        controls.Player.Move.canceled += OnMove;
-        controls.Player.Jump.performed += OnJump;
-        controls.Player.Attack.performed += OnAttack;
-        controls.Player.SpawnChat.performed += OnSpawnChat;
-    }
+    if (firePointRight != null)
+        currentFirePoint = firePointRight;
+}
 
-    private void OnDisable()
-    {
-        controls.Player.Move.performed -= OnMove;
-        controls.Player.Move.canceled -= OnMove;
-        controls.Player.Jump.performed -= OnJump;
-        controls.Player.Attack.performed -= OnAttack;
-        controls.Player.SpawnChat.performed -= OnSpawnChat;
-        controls.Player.Disable();
-    }
+private void OnEnable()
+{
+    if (controls == null) return;
+
+    controls.Player.Enable();
+    controls.Player.Move.performed += OnMove;
+    controls.Player.Move.canceled += OnMove;
+    controls.Player.Jump.performed += OnJump;
+    controls.Player.Attack.performed += OnAttack;
+    controls.Player.SpawnChat.performed += OnSpawnChat;
+}
+
+private void OnDisable()
+{
+    if (controls == null) return;
+
+    controls.Player.Move.performed -= OnMove;
+    controls.Player.Move.canceled -= OnMove;
+    controls.Player.Jump.performed -= OnJump;
+    controls.Player.Attack.performed -= OnAttack;
+    controls.Player.SpawnChat.performed -= OnSpawnChat;
+    controls.Player.Disable();
+}
+
 
     private void Update()
     {
@@ -90,7 +98,6 @@ public class PlayerController : MonoBehaviour
     private void UpdateJumpAndFallAnimations()
     {
         float velY = rb.linearVelocity.y;
-
         if (!isGrounded && velY > 0.1f)
         {
             animator.SetBool("isJumping", true);
@@ -114,17 +121,15 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnJump(InputAction.CallbackContext context)
-{
-    if (context.performed && isGrounded)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        animator.SetBool("isJumping", true);
-
-        if (dialogueSystem != null)
-            dialogueSystem.AdvanceFromAction("Jump");
+        if (context.performed && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            animator.SetBool("isJumping", true);
+            if (dialogueSystem != null)
+                dialogueSystem.AdvanceFromAction("Jump");
+        }
     }
-}
-
 
     private void OnAttack(InputAction.CallbackContext context)
     {
@@ -136,6 +141,34 @@ public class PlayerController : MonoBehaviour
         if (!context.performed) return;
         if (fairyController == null) return;
         fairyController.SpawnBubble();
+    }
+
+    private void OnElement1(InputAction.CallbackContext context)
+    {
+        if (!context.performed || vfxManager == null) return;
+        if (dialogueSystem != null)
+            dialogueSystem.AdvanceFromAction("Crimsonova");
+    }
+
+    private void OnElement2(InputAction.CallbackContext context)
+    {
+        if (!context.performed || vfxManager == null) return;
+        if (dialogueSystem != null)
+            dialogueSystem.AdvanceFromAction("SkyLume");
+    }
+
+    private void OnElement3(InputAction.CallbackContext context)
+    {
+        if (!context.performed || vfxManager == null) return;
+        if (dialogueSystem != null)
+            dialogueSystem.AdvanceFromAction("Mysthaze");
+    }
+
+    private void OnElement4(InputAction.CallbackContext context)
+    {
+        if (!context.performed || vfxManager == null) return;
+        if (dialogueSystem != null)
+            dialogueSystem.AdvanceFromAction("BlushBloom");
     }
 
     private void FlipSprite()
@@ -157,26 +190,21 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
-        {
             CollideWithEnemy(other);
-        }
     }
 
     private void CollideWithEnemy(Collision2D other)
     {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy == null) return;
-
         if (Physics2D.Raycast(transform.position, Vector2.down, spriteRenderer.bounds.extents.y + 0.1f, LayerMask.GetMask("Enemy")))
         {
             Vector2 velocity = rb.linearVelocity;
             velocity.y = 0f;
             rb.linearVelocity = velocity;
-
             float force = bounceForce;
             if (controls.Player.Jump.ReadValue<float>() > 0.5f)
                 force *= bounceForceMultiplier;
-
             rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
             enemy.Die();
         }
@@ -201,13 +229,11 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
-
         if (firePointRight != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(firePointRight.position, 0.1f);
         }
-
         if (firePointLeft != null)
         {
             Gizmos.color = Color.blue;

@@ -127,6 +127,51 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActivateSpell"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea45af37-7c7d-4290-b470-774025eefd0a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Element1"",
+                    ""type"": ""Button"",
+                    ""id"": ""883dc192-a97e-4f48-af96-55a589591106"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Element2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3867c01-50ae-4809-a019-9f13a60440f5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Element3"",
+                    ""type"": ""Button"",
+                    ""id"": ""5b84c740-604b-4709-a313-fbf4eaa2f1c8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Element4"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2ed9df9-1cf9-43dd-ae4e-0b6509bc2202"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +317,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SpawnChat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""082b0c46-9c9e-410b-ba72-4e212a65840f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateSpell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6de76894-08b9-4c4e-b93e-f9a866072e43"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Element1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29195c0a-df60-476e-a1bb-2775039d9766"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Element2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e212c229-55ac-4b60-9f20-d9332a0c650e"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Element3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20a81546-433d-47a6-87c5-e0d7f7377f44"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Element4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -411,6 +511,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_SpawnChat = m_Player.FindAction("SpawnChat", throwIfNotFound: true);
+        m_Player_ActivateSpell = m_Player.FindAction("ActivateSpell", throwIfNotFound: true);
+        m_Player_Element1 = m_Player.FindAction("Element1", throwIfNotFound: true);
+        m_Player_Element2 = m_Player.FindAction("Element2", throwIfNotFound: true);
+        m_Player_Element3 = m_Player.FindAction("Element3", throwIfNotFound: true);
+        m_Player_Element4 = m_Player.FindAction("Element4", throwIfNotFound: true);
         // Spells
         m_Spells = asset.FindActionMap("Spells", throwIfNotFound: true);
         m_Spells_Fire = m_Spells.FindAction("Fire", throwIfNotFound: true);
@@ -506,6 +611,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_SpawnChat;
+    private readonly InputAction m_Player_ActivateSpell;
+    private readonly InputAction m_Player_Element1;
+    private readonly InputAction m_Player_Element2;
+    private readonly InputAction m_Player_Element3;
+    private readonly InputAction m_Player_Element4;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -533,6 +643,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SpawnChat".
         /// </summary>
         public InputAction @SpawnChat => m_Wrapper.m_Player_SpawnChat;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ActivateSpell".
+        /// </summary>
+        public InputAction @ActivateSpell => m_Wrapper.m_Player_ActivateSpell;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Element1".
+        /// </summary>
+        public InputAction @Element1 => m_Wrapper.m_Player_Element1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Element2".
+        /// </summary>
+        public InputAction @Element2 => m_Wrapper.m_Player_Element2;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Element3".
+        /// </summary>
+        public InputAction @Element3 => m_Wrapper.m_Player_Element3;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Element4".
+        /// </summary>
+        public InputAction @Element4 => m_Wrapper.m_Player_Element4;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -571,6 +701,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpawnChat.started += instance.OnSpawnChat;
             @SpawnChat.performed += instance.OnSpawnChat;
             @SpawnChat.canceled += instance.OnSpawnChat;
+            @ActivateSpell.started += instance.OnActivateSpell;
+            @ActivateSpell.performed += instance.OnActivateSpell;
+            @ActivateSpell.canceled += instance.OnActivateSpell;
+            @Element1.started += instance.OnElement1;
+            @Element1.performed += instance.OnElement1;
+            @Element1.canceled += instance.OnElement1;
+            @Element2.started += instance.OnElement2;
+            @Element2.performed += instance.OnElement2;
+            @Element2.canceled += instance.OnElement2;
+            @Element3.started += instance.OnElement3;
+            @Element3.performed += instance.OnElement3;
+            @Element3.canceled += instance.OnElement3;
+            @Element4.started += instance.OnElement4;
+            @Element4.performed += instance.OnElement4;
+            @Element4.canceled += instance.OnElement4;
         }
 
         /// <summary>
@@ -594,6 +739,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpawnChat.started -= instance.OnSpawnChat;
             @SpawnChat.performed -= instance.OnSpawnChat;
             @SpawnChat.canceled -= instance.OnSpawnChat;
+            @ActivateSpell.started -= instance.OnActivateSpell;
+            @ActivateSpell.performed -= instance.OnActivateSpell;
+            @ActivateSpell.canceled -= instance.OnActivateSpell;
+            @Element1.started -= instance.OnElement1;
+            @Element1.performed -= instance.OnElement1;
+            @Element1.canceled -= instance.OnElement1;
+            @Element2.started -= instance.OnElement2;
+            @Element2.performed -= instance.OnElement2;
+            @Element2.canceled -= instance.OnElement2;
+            @Element3.started -= instance.OnElement3;
+            @Element3.performed -= instance.OnElement3;
+            @Element3.canceled -= instance.OnElement3;
+            @Element4.started -= instance.OnElement4;
+            @Element4.performed -= instance.OnElement4;
+            @Element4.canceled -= instance.OnElement4;
         }
 
         /// <summary>
@@ -887,6 +1047,41 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpawnChat(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ActivateSpell" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnActivateSpell(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Element1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnElement1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Element2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnElement2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Element3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnElement3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Element4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnElement4(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Spells" which allows adding and removing callbacks.
