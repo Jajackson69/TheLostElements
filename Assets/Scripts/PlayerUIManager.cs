@@ -7,7 +7,7 @@ public class MainMenuController : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private Button playButton;
-    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button controlsButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button quitButton;
 
@@ -16,7 +16,13 @@ public class MainMenuController : MonoBehaviour
 
     [Header("UI - Credits Panel")]
     [SerializeField] private GameObject creditsUIPrefab;
+    
+    [Header("UI - Controls Panel")]
+    [SerializeField] private GameObject controlsUIPrefab;
+
     private GameObject spawnedCreditsUI;
+    private GameObject spawnedControlsUI;
+
 
     [Header("Y positions for each buttons")]
     [SerializeField] private float playY = 1.329f;
@@ -25,7 +31,7 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         if (playButton == null) playButton = GameObject.Find("Play").GetComponent<Button>();
-        if (settingsButton == null) settingsButton = GameObject.Find("Settings").GetComponent<Button>();
+        if (controlsButton == null) controlsButton = GameObject.Find("Controls").GetComponent<Button>();
         if (creditsButton == null) creditsButton = GameObject.Find("Credits").GetComponent<Button>();
         if (quitButton == null) quitButton = GameObject.Find("Quit").GetComponent<Button>();
         if (uiHoverArrows == null) uiHoverArrows = GameObject.Find("UI-Hover Arrows");
@@ -34,12 +40,12 @@ public class MainMenuController : MonoBehaviour
     private void OnEnable()
     {
         playButton.onClick.AddListener(OnPlayClicked);
-        settingsButton.onClick.AddListener(OnSettingsClicked);
+        controlsButton.onClick.AddListener(OnControlsClicked);
         creditsButton.onClick.AddListener(OnCreditsClicked);
         quitButton.onClick.AddListener(OnQuitClicked);
 
         AddHoverListener(playButton, playY);
-        AddHoverListener(settingsButton, playY + offsetY);
+        AddHoverListener(controlsButton, playY + offsetY);
         AddHoverListener(creditsButton, playY + offsetY * 2);
         AddHoverListener(quitButton, playY + offsetY * 3);
     }
@@ -47,7 +53,7 @@ public class MainMenuController : MonoBehaviour
     private void OnDisable()
     {
         playButton.onClick.RemoveListener(OnPlayClicked);
-        settingsButton.onClick.RemoveListener(OnSettingsClicked);
+        controlsButton.onClick.RemoveListener(OnControlsClicked);
         creditsButton.onClick.RemoveListener(OnCreditsClicked);
         quitButton.onClick.RemoveListener(OnQuitClicked);
     }
@@ -76,10 +82,40 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Gamemap1");
     }
 
-    private void OnSettingsClicked()
+    private void OnControlsClicked()
+{
+    if (controlsUIPrefab == null)
     {
-        Debug.Log("Settings button clicked");
+        Debug.LogWarning("No UI Controls found!");
+        return;
     }
+
+    if (spawnedControlsUI != null)
+    {
+        Debug.Log("UI Controls already on.");
+        return;
+    }
+
+    Canvas canvas = FindFirstObjectByType<Canvas>();
+    if (canvas == null)
+    {
+        Debug.LogError("No Canvas found in the scene!");
+        return;
+    }
+
+    spawnedControlsUI = Instantiate(controlsUIPrefab, canvas.transform);
+
+    RectTransform rect = spawnedControlsUI.GetComponent<RectTransform>();
+    if (rect != null)
+        rect.anchoredPosition = new Vector2(-960.0067f, -540.0221f);
+    else
+        spawnedControlsUI.transform.localPosition = new Vector3(-960.0067f, -540.0221f, 0);
+
+    Button closeButton = spawnedControlsUI.GetComponentInChildren<Button>();
+    if (closeButton != null)
+        closeButton.onClick.AddListener(CloseControls);
+}
+
 
     private void OnCreditsClicked()
     {
@@ -113,6 +149,16 @@ public class MainMenuController : MonoBehaviour
         Button closeButton = spawnedCreditsUI.GetComponentInChildren<Button>();
         if (closeButton != null)
             closeButton.onClick.AddListener(CloseCredits);
+    }
+
+    private void CloseControls()
+    {
+        if (spawnedControlsUI != null)
+        {
+            spawnedControlsUI.SetActive(false);
+            Destroy(spawnedControlsUI);
+            spawnedControlsUI = null;
+        }
     }
 
     private void CloseCredits()

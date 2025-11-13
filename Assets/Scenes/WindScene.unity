@@ -485,7 +485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Controls
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -1564,11 +1564,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
   playButton: {fileID: 1007477519}
-  settingsButton: {fileID: 1650337828}
+  controlsButton: {fileID: 0}
   creditsButton: {fileID: 1776582641}
   quitButton: {fileID: 1610485779}
   uiHoverArrows: {fileID: 1584943347}
   creditsUIPrefab: {fileID: 4812582367200090450, guid: 5d56d8c1938bceb44a6d3c32804b4e8c, type: 3}
+  controlsUIPrefab: {fileID: 1466202949037247773, guid: 81dc474f201e76544a385d06683ae539, type: 3}
   playY: 1.329
   offsetY: -1.279
 --- !u!4 &1331605278
@@ -2263,7 +2264,7 @@ GameObject:
   - component: {fileID: 1650337829}
   - component: {fileID: 1650337828}
   m_Layer: 0
-  m_Name: Settings
+  m_Name: Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2826,7 +2827,7 @@ Transform:
   m_GameObject: {fileID: 2098524681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6262436, y: -2.5823588, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
