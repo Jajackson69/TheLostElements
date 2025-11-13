@@ -51,14 +51,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckDirectionChange()
     {
-        // Si un mur est détecté à droite
         if (Physics2D.Raycast(transform.position, Vector2.right, halfWidth + 0.1f, LayerMask.GetMask("Ground")) &&
             rigidBody.linearVelocityX > 0)
         {
             currentDirection *= -1;
             spriteRender.flipX = true;
         }
-        // Si un mur est détecté à gauche
         else if (Physics2D.Raycast(transform.position, Vector2.left, halfWidth + 0.1f, LayerMask.GetMask("Ground")) &&
                  rigidBody.linearVelocityX < 0)
         {

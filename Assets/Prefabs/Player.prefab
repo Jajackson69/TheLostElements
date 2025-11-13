@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 4377580925363672724}
   - component: {fileID: 7113004894157866439}
   - component: {fileID: -5214586956519012076}
+  - component: {fileID: 5843498840593930012}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -214,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 6997641802566135863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7354532, y: -4.623412, z: 0}
+  m_LocalPosition: {x: -3.6262436, y: -2.5823588, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -273,7 +274,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 48e209f07f7c22147b34b19d4a69f29d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.59, y: 0.88}
@@ -341,7 +342,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2ecbaf051bdd38d40a72e281d5def5c6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -403,6 +404,9 @@ MonoBehaviour:
   firePointLeft: {fileID: 5766775401286518465}
   firePointMiddle: {fileID: 4512568497854647725}
   currentFirePoint: {fileID: 0}
+  fairyController: {fileID: 0}
+  dialogueSystem: {fileID: 0}
+  vfxManager: {fileID: -5214586956519012076}
 --- !u!114 &-5214586956519012076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,8 +452,8 @@ MonoBehaviour:
     canCrossFuse: 1
     activeAnchorType: 0
   - elementName: BlushBloom
-    prefab: {fileID: 3424929205512600573, guid: 7c8ec04208619864f938daa4a7a712a5, type: 3}
-    anchorType: 1
+    prefab: {fileID: 4746018387604523734, guid: 1246b6e33cd25404ca80e07952415cbb, type: 3}
+    anchorType: 0
     instance: {fileID: 0}
     currentParent: {fileID: 0}
     tapCount: 0
@@ -472,3 +476,19 @@ MonoBehaviour:
     anchorType: 1
   offset: {x: 0, y: 0, z: 0}
   doubleTapDelay: 0.4
+--- !u!114 &5843498840593930012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6997641802566135863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8fbb0aea7cc11e4abae258d551e19a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpellActivator
+  vfxManager: {fileID: -5214586956519012076}
+  mainCamera: {fileID: 0}
+  glowTag: GlowMarker
+  dialogueSystem: {fileID: 0}

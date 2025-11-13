@@ -15,11 +15,9 @@ public class Enemy : MonoBehaviour
     {
         int direction = GetDirection(playerTransform);
 
-        // Trouve le PlayerControllerFull dans la scène
         var player = FindAnyObjectByType<PlayerController>();
         if (player != null)
         {
-            // Knockback sur le joueur
             Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
             if (playerRb != null)
             {
@@ -29,11 +27,9 @@ public class Enemy : MonoBehaviour
                 playerRb.AddForce(force, ForceMode2D.Impulse);
             }
 
-            // Dégâts
             player.DamagePlayer(damage);
         }
 
-        // Knockback sur l’ennemi lui-même
         var enemyMove = GetComponent<EnemyMovement>();
         if (enemyMove != null)
             enemyMove.KnockbackEnemy(knockbackToSelf, -direction);
