@@ -18,8 +18,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject creditsUIPrefab;
     private GameObject spawnedCreditsUI;
 
-
-
     [Header("Y positions for each buttons")]
     [SerializeField] private float playY = 1.329f;
     [SerializeField] private float offsetY = -1.279f;
@@ -30,11 +28,7 @@ public class MainMenuController : MonoBehaviour
         if (settingsButton == null) settingsButton = GameObject.Find("Settings").GetComponent<Button>();
         if (creditsButton == null) creditsButton = GameObject.Find("Credits").GetComponent<Button>();
         if (quitButton == null) quitButton = GameObject.Find("Quit").GetComponent<Button>();
-
-        if (uiHoverArrows == null)
-        {
-            uiHoverArrows = GameObject.Find("UI-Hover Arrows");
-        }
+        if (uiHoverArrows == null) uiHoverArrows = GameObject.Find("UI-Hover Arrows");
     }
 
     private void OnEnable()
@@ -61,13 +55,9 @@ public class MainMenuController : MonoBehaviour
     private void AddHoverListener(Button button, float yPosition)
     {
         EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>();
-        if (trigger == null)
-            trigger = button.gameObject.AddComponent<EventTrigger>();
+        if (trigger == null) trigger = button.gameObject.AddComponent<EventTrigger>();
 
-        EventTrigger.Entry entryEnter = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerEnter
-        };
+        EventTrigger.Entry entryEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
         entryEnter.callback.AddListener((_) => MoveHoverArrows(yPosition));
         trigger.triggers.Add(entryEnter);
     }
@@ -83,7 +73,6 @@ public class MainMenuController : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        Debug.Log("Play button clicked");
         SceneManager.LoadScene("Gamemap1");
     }
 
@@ -92,48 +81,52 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Settings button clicked");
     }
 
-   private void OnCreditsClicked()
-{
-    Debug.Log("Credits button clicked");
-
-    if (creditsUIPrefab == null)
+    private void OnCreditsClicked()
     {
-        Debug.LogWarning("No UI Credits found!");
-        return;
+        if (creditsUIPrefab == null)
+        {
+            Debug.LogWarning("No UI Credits found!");
+            return;
+        }
+
+        if (spawnedCreditsUI != null)
+        {
+            Debug.Log("UI Credits already on.");
+            return;
+        }
+
+        Canvas canvas = FindFirstObjectByType<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogError("No Canvas found in the scene!");
+            return;
+        }
+
+        spawnedCreditsUI = Instantiate(creditsUIPrefab, canvas.transform);
+
+        RectTransform rect = spawnedCreditsUI.GetComponent<RectTransform>();
+        if (rect != null)
+            rect.anchoredPosition = new Vector2(-960.0067f, -540.0221f);
+        else
+            spawnedCreditsUI.transform.localPosition = new Vector3(-960.0067f, -540.0221f, 0);
+
+        Button closeButton = spawnedCreditsUI.GetComponentInChildren<Button>();
+        if (closeButton != null)
+            closeButton.onClick.AddListener(CloseCredits);
     }
 
-    if (spawnedCreditsUI != null)
+    private void CloseCredits()
     {
-        Debug.Log("UI Credits already on.");
-        return;
+        if (spawnedCreditsUI != null)
+        {
+            spawnedCreditsUI.SetActive(false);
+            Destroy(spawnedCreditsUI);
+            spawnedCreditsUI = null;
+        }
     }
-
-    Canvas canvas = FindFirstObjectByType<Canvas>();
-    if (canvas == null)
-    {
-        Debug.LogError("No Canvas found in the scene!");
-        return;
-    }
-
-    spawnedCreditsUI = Instantiate(creditsUIPrefab, canvas.transform);
-
-    RectTransform rect = spawnedCreditsUI.GetComponent<RectTransform>();
-    if (rect != null)
-    {
-        rect.anchoredPosition = new Vector2(-960.0067f, -540.0221f);
-    }
-    else
-    {
-        spawnedCreditsUI.transform.localPosition = new Vector3(-960.0067f, -540.0221f, 0);
-    }
-}
-
-
 
     private void OnQuitClicked()
     {
-        Debug.Log("Quit button clicked");
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

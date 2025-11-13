@@ -14,51 +14,46 @@ public class DialogueLine
 public class DialogueSystem : MonoBehaviour
 {
     [SerializeField] private UnityEngine.UI.Text dialogueText;
-    [SerializeField] private UnityEngine.UI.Text dotsText;
-
     [SerializeField] private DialogueLine[] dialogueLines;
     [SerializeField] private float typingSpeed = 0.03f;
-    [SerializeField] private float dotsInterval = 0.4f;
+    [SerializeField] private Animator mouseAnimator;
 
     private int currentLineIndex;
     private bool isTyping;
     private bool isComplete;
     private Coroutine typingCoroutine;
-    private Coroutine dotsCoroutine;
-    private PlayerControls controls;
-    private bool initialized;
 
-    void Awake()
-    {
-        controls = null;
-    }
+    private static PlayerControls sharedControls;
+    private static bool inputHooked;
 
     void Start()
-{
-    StartCoroutine(InitDialogue());
-}
-
-IEnumerator InitDialogue()
-{
-    yield return null;
-    yield return null;
-    controls = new PlayerControls();
-    if (dotsText != null) dotsText.text = "";
-    if (dialogueText != null) dialogueText.text = "";
-    controls.Dialogue.Enable();
-    controls.Dialogue.Next.performed += OnAdvancePressed;
-    StartDialogue();
-}
-
-
-    void OnDisable()
     {
-        if (controls != null)
-        {
-            controls.Dialogue.Next.performed -= OnAdvancePressed;
-            controls.Dialogue.Disable();
-        }
+        StartCoroutine(InitDialogue());
     }
+
+    IEnumerator InitDialogue()
+    {
+        yield return null;
+        yield return null;
+
+        if (sharedControls == null)
+            sharedControls = new PlayerControls();
+
+        if (!inputHooked)
+        {
+            sharedControls.Dialogue.Next.performed += OnAdvancePressed;
+            inputHooked = true;
+        }
+
+        sharedControls.Dialogue.Enable();
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        StartDialogue();
+    }
+
+    
 
     public void StartDialogue()
     {
@@ -82,6 +77,8 @@ IEnumerator InitDialogue()
     void OnAdvancePressed(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
+        if (!gameObject.activeInHierarchy) return;
+
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
         if (line.requiresAction) return;
@@ -104,7 +101,7 @@ IEnumerator InitDialogue()
             CompleteLineInstantly();
         else if (isComplete)
         {
-            StopDots();
+            HideMouseHint();
             NextLine();
         }
     }
@@ -129,7 +126,7 @@ IEnumerator InitDialogue()
         isTyping = true;
         isComplete = false;
         dialogueText.text = "";
-        StopDots();
+        HideMouseHint();
 
         foreach (char c in lineText)
         {
@@ -141,46 +138,9 @@ IEnumerator InitDialogue()
         isComplete = true;
 
         if (currentLineIndex < dialogueLines.Length - 1)
-            StartDots();
+            ShowMouseHint();
         else
             StartCoroutine(AutoEndAfterDelay());
-    }
-
-    IEnumerator AutoEndAfterDelay()
-    {
-        yield return new WaitForSeconds(1f);
-        EndDialogue();
-    }
-
-    void StartDots()
-    {
-        if (dotsText == null) return;
-        if (dotsCoroutine != null)
-            StopCoroutine(dotsCoroutine);
-        dotsCoroutine = StartCoroutine(DotsLoop());
-    }
-
-    void StopDots()
-    {
-        if (dotsCoroutine != null)
-            StopCoroutine(dotsCoroutine);
-        dotsCoroutine = null;
-        if (dotsText != null)
-            dotsText.text = "";
-    }
-
-    IEnumerator DotsLoop()
-    {
-        int count = 0;
-        while (!isTyping && isComplete)
-        {
-            if (dotsText != null)
-                dotsText.text = new string('.', count);
-            count = (count + 1) % 4;
-            yield return new WaitForSeconds(dotsInterval);
-        }
-        if (dotsText != null)
-            dotsText.text = "";
     }
 
     void CompleteLineInstantly()
@@ -194,9 +154,27 @@ IEnumerator InitDialogue()
         isComplete = true;
 
         if (currentLineIndex < dialogueLines.Length - 1)
-            StartDots();
+            ShowMouseHint();
         else
             StartCoroutine(AutoEndAfterDelay());
+    }
+
+    IEnumerator AutoEndAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        EndDialogue();
+    }
+
+    void ShowMouseHint()
+    {
+        if (mouseAnimator != null)
+            mouseAnimator.SetBool("ClickHint", true);
+    }
+
+    void HideMouseHint()
+    {
+        if (mouseAnimator != null)
+            mouseAnimator.SetBool("ClickHint", false);
     }
 
     void NextLine()
@@ -219,7 +197,9 @@ IEnumerator InitDialogue()
         isComplete = false;
         if (dialogueText != null)
             dialogueText.text = "";
-        StopDots();
+        HideMouseHint();
+        if (mouseAnimator != null)
+            mouseAnimator.SetTrigger("Hide");
         gameObject.SetActive(false);
     }
 }
