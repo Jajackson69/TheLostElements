@@ -18,13 +18,18 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
+    [SerializeField] private float knockbackDuration = 0.2f;
+    private bool isKnockedback = false;
+
     [Header("Ground Check")]
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
     [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 10;
+    [SerializeField] private int maxHealth = 100;
+    public int MaxHealth => maxHealth;
+
     private int currentHealth;
     public static Action<int> OnPlayerTakeDamage;
 
@@ -35,7 +40,7 @@ public class PlayerController : MonoBehaviour
     [Header("Fire Point Settings")]
     public Transform firePointRight;
     public Transform firePointLeft;
-    public Transform firePointMiddle; 
+    public Transform firePointMiddle;
     [HideInInspector] public Transform currentFirePoint;
 
     [Header("Chat Settings")]
@@ -48,56 +53,89 @@ public class PlayerController : MonoBehaviour
     public PlayerControls Controls => controls;
 
     private void Awake()
-{
-    if (controls == null)
-        controls = new PlayerControls();
+    {
+        if (controls == null)
+            controls = new PlayerControls();
 
-    rb = GetComponent<Rigidbody2D>();
-    spriteRenderer = GetComponent<SpriteRenderer>();
-    animator = GetComponent<Animator>();
-    currentHealth = maxHealth;
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
 
-    if (firePointRight != null)
-        currentFirePoint = firePointRight;
-}
+        if (firePointRight != null)
+            currentFirePoint = firePointRight;
+    }
 
-private void OnEnable()
-{
-    if (controls == null) return;
+    private void OnEnable()
+    {
+        if (controls == null) return;
 
-    controls.Player.Enable();
-    controls.Player.Move.performed += OnMove;
-    controls.Player.Move.canceled += OnMove;
-    controls.Player.Jump.performed += OnJump;
-    controls.Player.Attack.performed += OnAttack;
-    controls.Player.SpawnChat.performed += OnSpawnChat;
-}
+        controls.Player.Enable();
+        controls.Player.Move.performed += OnMove;
+        controls.Player.Move.canceled += OnMove;
+        controls.Player.Jump.performed += OnJump;
+        controls.Player.Attack.performed += OnAttack;
+        controls.Player.SpawnChat.performed += OnSpawnChat;
+    }
 
-private void OnDisable()
-{
-    if (controls == null) return;
+    private void OnDisable()
+    {
+        if (controls == null) return;
 
-    controls.Player.Move.performed -= OnMove;
-    controls.Player.Move.canceled -= OnMove;
-    controls.Player.Jump.performed -= OnJump;
-    controls.Player.Attack.performed -= OnAttack;
-    controls.Player.SpawnChat.performed -= OnSpawnChat;
-    controls.Player.Disable();
-}
-
+        controls.Player.Move.performed -= OnMove;
+        controls.Player.Move.canceled -= OnMove;
+        controls.Player.Jump.performed -= OnJump;
+        controls.Player.Attack.performed -= OnAttack;
+        controls.Player.SpawnChat.performed -= OnSpawnChat;
+        controls.Player.Disable();
+    }
 
     private void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+
+#if UNITY_6000_0_OR_NEWER
+if (!isKnockedback)
+    rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+#else
+        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+#endif
+
         animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
         UpdateJumpAndFallAnimations();
         FlipSprite();
     }
 
+
+public void ApplyKnockback(Vector2 knockDir)
+{
+    StartCoroutine(KnockbackCoroutine(knockDir));
+}
+
+private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
+{
+    isKnockedback = true;
+
+#if UNITY_6000_0_OR_NEWER
+    rb.linearVelocity = Vector2.zero;
+    rb.AddForce(knockDir, ForceMode2D.Impulse);
+#else
+    rb.velocity = Vector2.zero;
+    rb.AddForce(knockDir, ForceMode2D.Impulse);
+#endif
+
+    yield return new WaitForSeconds(knockbackDuration);
+    isKnockedback = false;
+}
+
     private void UpdateJumpAndFallAnimations()
     {
+#if UNITY_6000_0_OR_NEWER
         float velY = rb.linearVelocity.y;
+#else
+        float velY = rb.velocity.y;
+#endif
+
         if (!isGrounded && velY > 0.1f)
         {
             animator.SetBool("isJumping", true);
@@ -124,8 +162,14 @@ private void OnDisable()
     {
         if (context.performed && isGrounded)
         {
+#if UNITY_6000_0_OR_NEWER
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+#else
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+#endif
+
             animator.SetBool("isJumping", true);
+
             if (dialogueSystem != null)
                 dialogueSystem.AdvanceFromAction("Jump");
         }
@@ -146,29 +190,25 @@ private void OnDisable()
     private void OnElement1(InputAction.CallbackContext context)
     {
         if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null)
-            dialogueSystem.AdvanceFromAction("Crimsonova");
+        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("Crimsonova");
     }
 
     private void OnElement2(InputAction.CallbackContext context)
     {
         if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null)
-            dialogueSystem.AdvanceFromAction("SkyLume");
+        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("SkyLume");
     }
 
     private void OnElement3(InputAction.CallbackContext context)
     {
         if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null)
-            dialogueSystem.AdvanceFromAction("Mysthaze");
+        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("Mysthaze");
     }
 
     private void OnElement4(InputAction.CallbackContext context)
     {
         if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null)
-            dialogueSystem.AdvanceFromAction("BlushBloom");
+        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("BlushBloom");
     }
 
     private void FlipSprite()
@@ -189,28 +229,39 @@ private void OnDisable()
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-            CollideWithEnemy(other);
-    }
+        if (!other.gameObject.CompareTag("Enemy")) return;
 
-    private void CollideWithEnemy(Collision2D other)
-    {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy == null) return;
-        if (Physics2D.Raycast(transform.position, Vector2.down, spriteRenderer.bounds.extents.y + 0.1f, LayerMask.GetMask("Enemy")))
+
+        bool stomp = Physics2D.Raycast(
+            transform.position,
+            Vector2.down,
+            spriteRenderer.bounds.extents.y + 0.1f,
+            LayerMask.GetMask("Enemy")
+        );
+
+        if (stomp)
         {
+#if UNITY_6000_0_OR_NEWER
             Vector2 velocity = rb.linearVelocity;
+#else
+            Vector2 velocity = rb.velocity;
+#endif
             velocity.y = 0f;
+
+#if UNITY_6000_0_OR_NEWER
             rb.linearVelocity = velocity;
+#else
+            rb.velocity = velocity;
+#endif
+
             float force = bounceForce;
             if (controls.Player.Jump.ReadValue<float>() > 0.5f)
                 force *= bounceForceMultiplier;
+
             rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
             enemy.Die();
-        }
-        else
-        {
-            enemy.HitPlayer(transform);
         }
     }
 
@@ -218,6 +269,7 @@ private void OnDisable()
     {
         currentHealth -= damage;
         OnPlayerTakeDamage?.Invoke(currentHealth);
+
         if (currentHealth <= 0)
             Destroy(gameObject);
     }
@@ -228,16 +280,6 @@ private void OnDisable()
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-        if (firePointRight != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(firePointRight.position, 0.1f);
-        }
-        if (firePointLeft != null)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(firePointLeft.position, 0.1f);
         }
     }
 }

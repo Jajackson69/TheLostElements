@@ -1,51 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour
+public class HealthUI : MonoBehaviour
 {
-    [Header("UI references")]
-    [SerializeField] private Image healthBar;          
-    [SerializeField] private Image healthBackground;  
+    [SerializeField] private Image healthFill;
+    [SerializeField] private PlayerController player;
 
-    [Header("Health")]
-    [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float currentHealth;
+    private int maxHealth;
 
-    [Header("Fluidity")]
-    [SerializeField] private float lerpSpeed = 5f;    
+    void Start()
+{
+    Debug.Log("HealthUI Init: healthFill = " + healthFill);
+    Debug.Log("HealthUI Init: player = " + player);
 
-    private void Start()
+    maxHealth = player != null ? player.MaxHealth : 100;
+    PlayerController.OnPlayerTakeDamage += UpdateHealth;
+}
+
+
+    void OnDestroy()
     {
-        currentHealth = maxHealth;
-        UpdateHealthBarInstant();
+        PlayerController.OnPlayerTakeDamage -= UpdateHealth;
     }
 
-    private void Update()
+    private void UpdateHealth(int current)
     {
-        float fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, Time.deltaTime * lerpSpeed);
-        healthBar.fillAmount = fillAmount;
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-    }
-
-    public void Heal(float amount)
-    {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-    }
-
-    public void ResetHealth()
-    {
-        currentHealth = maxHealth;
-        UpdateHealthBarInstant();
-    }
-
-    private void UpdateHealthBarInstant()
-    {
-        healthBar.fillAmount = currentHealth / maxHealth;
+        float value = Mathf.Clamp01((float)current / maxHealth);
+        healthFill.fillAmount = value;
     }
 }
