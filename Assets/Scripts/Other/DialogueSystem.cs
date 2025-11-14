@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System;
+
 
 [System.Serializable]
 public class DialogueLine
@@ -25,6 +27,8 @@ public class DialogueSystem : MonoBehaviour
 
     private static PlayerControls sharedControls;
     private static bool inputHooked;
+    public static Action OnDialogueFinished;
+
 
     void Start()
     {
@@ -201,5 +205,8 @@ public class DialogueSystem : MonoBehaviour
         if (mouseAnimator != null)
             mouseAnimator.SetTrigger("Hide");
         gameObject.SetActive(false);
+
+        OnDialogueFinished?.Invoke();
+
     }
 }

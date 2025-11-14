@@ -265,14 +265,31 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
         }
     }
 
-    public void DamagePlayer(int damage)
-    {
-        currentHealth -= damage;
-        OnPlayerTakeDamage?.Invoke(currentHealth);
+   public void DamagePlayer(int damage)
+{
+    currentHealth -= damage;
+    OnPlayerTakeDamage?.Invoke(currentHealth);
 
-        if (currentHealth <= 0)
-            Destroy(gameObject);
-    }
+    if (currentHealth <= 0)
+        Die();
+}
+
+void Die()
+{
+    var ui = FindObjectOfType<DeathUIManager>();
+
+    if (ui != null)
+        ui.ShowDeathUI();
+    else
+        Debug.LogError("DeathUIManager not found in scene!");
+
+    // disable player visuals + collisions
+    GetComponent<SpriteRenderer>().enabled = false;
+    GetComponent<Collider2D>().enabled = false;
+    rb.linearVelocity = Vector2.zero;
+}
+
+
 
     private void OnDrawGizmosSelected()
     {
