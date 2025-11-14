@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
@@ -49,8 +50,42 @@ public class PlayerController : MonoBehaviour
 
     [Header("Magic Settings")]
     [SerializeField] private ElementVFXManager vfxManager;
+    [SerializeField] private GameObject deathScreen;
+
 
     public PlayerControls Controls => controls;
+
+private Vector3 respawnPoint;
+
+private void Start()
+{
+    respawnPoint = transform.position; // first spawn point
+}
+
+public void Respawn()
+{
+    if (deathScreen != null)
+    deathScreen.SetActive(false);
+    
+    currentHealth = maxHealth;
+    OnPlayerTakeDamage?.Invoke(currentHealth);
+
+    transform.position = respawnPoint;
+
+    GetComponent<SpriteRenderer>().enabled = true;
+    GetComponent<Collider2D>().enabled = true;
+
+#if UNITY_6000_0_OR_NEWER
+    rb.linearVelocity = Vector2.zero;
+#else
+    rb.velocity = Vector2.zero;
+#endif
+}
+
+public void SetRespawnPoint(Vector3 point)
+{
+    respawnPoint = point;
+}
 
     private void Awake()
     {
@@ -276,20 +311,35 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
 
 void Die()
 {
-    var ui = FindObjectOfType<DeathUIManager>();
+    rb.bodyType = RigidbodyType2D.Static;
 
-    if (ui != null)
-        ui.ShowDeathUI();
-    else
-        Debug.LogError("DeathUIManager not found in scene!");
+    moveInput = Vector2.zero;
 
-    // disable player visuals + collisions
-    GetComponent<SpriteRenderer>().enabled = false;
-    GetComponent<Collider2D>().enabled = false;
-    rb.linearVelocity = Vector2.zero;
+    if (controls != null)
+        controls.Disable();
+
+    animator.ResetTrigger("death");
+    animator.SetTrigger("death");
+
+    StartCoroutine(ResetDeathTriggerNextFrame());
+    StartCoroutine(DeathSequence());
 }
 
+private IEnumerator ResetDeathTriggerNextFrame()
+{
+    yield return null;
+    animator.ResetTrigger("death");
+}
 
+private IEnumerator DeathSequence()
+{
+    yield return new WaitForSeconds(0.84f);
+
+    if (deathScreen != null)
+        deathScreen.SetActive(true);
+    else
+        Debug.LogError("deathScreen reference missing!");
+}
 
     private void OnDrawGizmosSelected()
     {
