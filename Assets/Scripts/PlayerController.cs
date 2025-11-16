@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -49,6 +50,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Magic Settings")]
     [SerializeField] private ElementVFXManager vfxManager;
+
+    [Header("Sounds")]
+    private bool playingFootsteps = false;
+    public float footstepSpeed = 0.5f;
 
     public PlayerControls Controls => controls;
 
@@ -101,9 +106,20 @@ if (!isKnockedback)
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
 #endif
 
-        animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
-        UpdateJumpAndFallAnimations();
-        FlipSprite();
+         bool isRunning = Mathf.Abs(moveInput.x) > 0.1f && isGrounded && !isKnockedback;
+        animator.SetBool("isRunning", isRunning);
+
+        // footsteps logic
+        if (isRunning && !playingFootsteps)
+        {
+            StartFootsteps();
+        }
+        else if (!isRunning && playingFootsteps)
+        {
+            StopFootsteps();
+        }
+            UpdateJumpAndFallAnimations();
+            FlipSprite();
     }
 
 
@@ -157,6 +173,25 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
     {
         moveInput = context.ReadValue<Vector2>();
     }
+    void StartFootsteps()
+    {
+        playingFootsteps = true;
+        InvokeRepeating(nameof(PlayFootstep), 0f, footstepSpeed);
+       
+    }
+
+    void PlayFootstep()
+    {
+        float pitch = 2f + UnityEngine.Random.Range(0.0f, 0.5f); 
+        SoundEffectManager.Play("footsteps", pitch);
+    }
+
+    void StopFootsteps()
+    {
+        playingFootsteps = false;
+        CancelInvoke(nameof(PlayFootstep));
+    }
+
 
     private void OnJump(InputAction.CallbackContext context)
     {
@@ -169,6 +204,7 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
 #endif
 
             animator.SetBool("isJumping", true);
+            SoundEffectManager.Play("jump");
 
             if (dialogueSystem != null)
                 dialogueSystem.AdvanceFromAction("Jump");
@@ -276,6 +312,7 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
 
 void Die()
 {
+    StopFootsteps();
     var ui = FindObjectOfType<DeathUIManager>();
 
     if (ui != null)
