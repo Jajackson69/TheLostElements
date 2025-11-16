@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
@@ -50,42 +50,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Magic Settings")]
     [SerializeField] private ElementVFXManager vfxManager;
-    [SerializeField] private GameObject deathScreen;
 
+    [Header("Sounds")]
+    private bool playingFootsteps = false;
+    public float footstepSpeed = 0.5f;
 
     public PlayerControls Controls => controls;
-
-private Vector3 respawnPoint;
-
-private void Start()
-{
-    respawnPoint = transform.position; // first spawn point
-}
-
-public void Respawn()
-{
-    if (deathScreen != null)
-    deathScreen.SetActive(false);
-    
-    currentHealth = maxHealth;
-    OnPlayerTakeDamage?.Invoke(currentHealth);
-
-    transform.position = respawnPoint;
-
-    GetComponent<SpriteRenderer>().enabled = true;
-    GetComponent<Collider2D>().enabled = true;
-
-#if UNITY_6000_0_OR_NEWER
-    rb.linearVelocity = Vector2.zero;
-#else
-    rb.velocity = Vector2.zero;
-#endif
-}
-
-public void SetRespawnPoint(Vector3 point)
-{
-    respawnPoint = point;
-}
 
     private void Awake()
     {
@@ -136,9 +106,20 @@ if (!isKnockedback)
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
 #endif
 
-        animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
-        UpdateJumpAndFallAnimations();
-        FlipSprite();
+         bool isRunning = Mathf.Abs(moveInput.x) > 0.1f && isGrounded && !isKnockedback;
+        animator.SetBool("isRunning", isRunning);
+
+        // footsteps logic
+        if (isRunning && !playingFootsteps)
+        {
+            StartFootsteps();
+        }
+        else if (!isRunning && playingFootsteps)
+        {
+            StopFootsteps();
+        }
+            UpdateJumpAndFallAnimations();
+            FlipSprite();
     }
 
 
@@ -192,6 +173,25 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
     {
         moveInput = context.ReadValue<Vector2>();
     }
+    void StartFootsteps()
+    {
+        playingFootsteps = true;
+        InvokeRepeating(nameof(PlayFootstep), 0f, footstepSpeed);
+       
+    }
+
+    void PlayFootstep()
+    {
+        float pitch = 2f + UnityEngine.Random.Range(0.0f, 0.5f); 
+        SoundEffectManager.Play("footsteps", pitch);
+    }
+
+    void StopFootsteps()
+    {
+        playingFootsteps = false;
+        CancelInvoke(nameof(PlayFootstep));
+    }
+
 
     private void OnJump(InputAction.CallbackContext context)
     {
@@ -204,6 +204,7 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
 #endif
 
             animator.SetBool("isJumping", true);
+            SoundEffectManager.Play("jump");
 
             if (dialogueSystem != null)
                 dialogueSystem.AdvanceFromAction("Jump");
@@ -311,35 +312,21 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
 
 void Die()
 {
-    rb.bodyType = RigidbodyType2D.Static;
+    StopFootsteps();
+    var ui = FindObjectOfType<DeathUIManager>();
 
-    moveInput = Vector2.zero;
-
-    if (controls != null)
-        controls.Disable();
-
-    animator.ResetTrigger("death");
-    animator.SetTrigger("death");
-
-    StartCoroutine(ResetDeathTriggerNextFrame());
-    StartCoroutine(DeathSequence());
-}
-
-private IEnumerator ResetDeathTriggerNextFrame()
-{
-    yield return null;
-    animator.ResetTrigger("death");
-}
-
-private IEnumerator DeathSequence()
-{
-    yield return new WaitForSeconds(0.84f);
-
-    if (deathScreen != null)
-        deathScreen.SetActive(true);
+    if (ui != null)
+        ui.ShowDeathUI();
     else
-        Debug.LogError("deathScreen reference missing!");
+        Debug.LogError("DeathUIManager not found in scene!");
+
+    // disable player visuals + collisions
+    GetComponent<SpriteRenderer>().enabled = false;
+    GetComponent<Collider2D>().enabled = false;
+    rb.linearVelocity = Vector2.zero;
 }
+
+
 
     private void OnDrawGizmosSelected()
     {
