@@ -744,11 +744,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 27251514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89f346ec8750584fbd0d9551f0560ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c2eb04cb5ea4a4f4080c2eaa6914f867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundController
-  cam: {fileID: 0}
-  parallaxEffect: 0
+  cam: {fileID: 321342624}
+  parallaxEffect: 0.6
+  yOffset: 0
 --- !u!212 &27251517
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1443,18 +1444,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1144778079135595123, guid: 58ad07af7fdfb734982d4a4b158dcda1, type: 3}
-      propertyPath: frontOffsetX
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144778079135595123, guid: 58ad07af7fdfb734982d4a4b158dcda1, type: 3}
-      propertyPath: ledgeCheckDown
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 1144778079135595123, guid: 58ad07af7fdfb734982d4a4b158dcda1, type: 3}
-      propertyPath: wallCheckExtra
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 6258602979176275651, guid: 58ad07af7fdfb734982d4a4b158dcda1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 50.6
@@ -2167,6 +2156,10 @@ PrefabInstance:
     - target: {fileID: 430870639837415937, guid: 83fe5edd562ca0c4d8fc0324307d3a12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001192686008120175, guid: 83fe5edd562ca0c4d8fc0324307d3a12, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5443187414326066890, guid: 83fe5edd562ca0c4d8fc0324307d3a12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8915,7 +8908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &849185766
 Transform:
   m_ObjectHideFlags: 0
@@ -10312,11 +10305,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1682827908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89f346ec8750584fbd0d9551f0560ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c2eb04cb5ea4a4f4080c2eaa6914f867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundController
-  cam: {fileID: 0}
-  parallaxEffect: 0
+  cam: {fileID: 321342624}
+  parallaxEffect: 0.32
+  yOffset: 0
 --- !u!212 &1682827911
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11006,11 +11000,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873480353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89f346ec8750584fbd0d9551f0560ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c2eb04cb5ea4a4f4080c2eaa6914f867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundController
-  cam: {fileID: 0}
-  parallaxEffect: 0
+  cam: {fileID: 321342624}
+  parallaxEffect: 0.25
+  yOffset: 0
 --- !u!212 &1873480356
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11753,11 +11748,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956326429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89f346ec8750584fbd0d9551f0560ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c2eb04cb5ea4a4f4080c2eaa6914f867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundController
-  cam: {fileID: 0}
-  parallaxEffect: 0
+  cam: {fileID: 321342624}
+  parallaxEffect: 0.67
+  yOffset: 0
 --- !u!212 &1956326432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11980,11 +11976,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1998118865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89f346ec8750584fbd0d9551f0560ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c2eb04cb5ea4a4f4080c2eaa6914f867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundController
-  cam: {fileID: 0}
-  parallaxEffect: 0
+  cam: {fileID: 321342624}
+  parallaxEffect: 0.85
+  yOffset: 0
 --- !u!212 &1998118868
 SpriteRenderer:
   m_ObjectHideFlags: 0
