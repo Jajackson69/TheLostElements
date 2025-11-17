@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2448438513720657191}
   - component: {fileID: 1644774251227990952}
   - component: {fileID: 7018346231064104960}
-  - component: {fileID: 5823807492488309175}
-  - component: {fileID: 3374789713947229079}
-  - component: {fileID: 718063372808214989}
   - component: {fileID: 5003234337742946278}
+  - component: {fileID: 6188937426303332502}
+  - component: {fileID: 6453631616931017084}
+  - component: {fileID: 1144778079135595123}
   m_Layer: 0
   m_Name: Mushroom-mob
   m_TagString: Enemy
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2ecbaf051bdd38d40a72e281d5def5c6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -143,65 +143,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &5823807492488309175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050854817539170108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2056562d83c5ac34ea7ec645aea76347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  patrolSpeed: 2
-  chaseSpeed: 3
-  sightRange: 8
-  verticalTolerance: 1.2
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  wallCheckExtra: 0.1
-  ledgeCheckDown: 0.5
-  frontOffsetX: 0.1
-  playerTag: Player
-  animator: {fileID: 1644774251227990952}
-  loseSightAfter: 0.6
---- !u!114 &3374789713947229079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050854817539170108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc510a58e5dfaf5489090d2b65e43029, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  damage: 10
-  hitInterval: 0.5
-  knockbackToPlayer: {x: 5, y: 2}
-  knockbackToSelf: {x: 5, y: 5}
---- !u!114 &718063372808214989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9050854817539170108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca8cb80bb595e664dac6ddae84400e3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 5
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &5003234337742946278
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -248,3 +191,59 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.32, y: 0.34}
   m_EdgeRadius: 0
+--- !u!114 &6188937426303332502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050854817539170108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bed9d20c3a41549b9244c26fa7f086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  damage: 3
+  knockbackToPlayer: {x: 3, y: 5}
+  knockbackToSelf: {x: 3, y: 5}
+--- !u!114 &6453631616931017084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050854817539170108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c50a7d14e87ae42a81dc6052c66f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 5
+--- !u!114 &1144778079135595123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9050854817539170108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9719688b753ddf4b8db85a1fd5e4f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  patrolSpeed: 2
+  chaseSpeed: 3
+  sightRange: 8
+  verticalTolerance: 1.2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  wallCheckExtra: 0.4
+  ledgeCheckDown: 0.45
+  frontOffsetX: 0.15
+  playerTag: Player
+  animator: {fileID: 0}
+  loseSightAfter: 0.6
