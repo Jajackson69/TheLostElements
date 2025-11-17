@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6188937426303332502}
   - component: {fileID: 6453631616931017084}
   - component: {fileID: 1144778079135595123}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mushroom-mob
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &5003234337742946278
 BoxCollider2D:
   m_ObjectHideFlags: 0
