@@ -150,7 +150,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -250,7 +250,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -392,6 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   jumpForce: 8
+  knockbackDuration: 0.2
   groundCheck: {fileID: 7460538480150214102}
   groundCheckRadius: 0.2
   groundLayer:
@@ -407,6 +408,7 @@ MonoBehaviour:
   fairyController: {fileID: 0}
   dialogueSystem: {fileID: 0}
   vfxManager: {fileID: -5214586956519012076}
+  deathUI: {fileID: 0}
 --- !u!114 &-5214586956519012076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,15 +467,48 @@ MonoBehaviour:
   - tagA: Crimsonova
     tagB: SkyLume
     fusionPrefab: {fileID: 1377131006053332276, guid: 931d53c2412fef04880b4045b6f04f6b, type: 3}
+    fusionDamage: 1
     anchorType: 0
   - tagA: Crimsonova
     tagB: Crimsonova
     fusionPrefab: {fileID: 6881079599388059597, guid: f9b799c37ec7a4344b2002be88f2380c, type: 3}
+    fusionDamage: 1
     anchorType: 0
   - tagA: SkyLume
     tagB: SkyLume
     fusionPrefab: {fileID: 4262623056482241364, guid: b7001a552767ee943852979358986930, type: 3}
+    fusionDamage: 1
     anchorType: 1
+  - tagA: Crimsonova
+    tagB: Mysthaze
+    fusionPrefab: {fileID: 5222750351268202474, guid: efd152407f2c49b45ad521f524e8776f, type: 3}
+    fusionDamage: 1
+    anchorType: 0
+  - tagA: Crimsonova
+    tagB: BlushBloom
+    fusionPrefab: {fileID: 7062806617379088084, guid: bd67489a2df67ba4ba4c3e7b9c4e0e8c, type: 3}
+    fusionDamage: 1
+    anchorType: 0
+  - tagA: Mysthaze
+    tagB: SkyLume
+    fusionPrefab: {fileID: 6108195706035121270, guid: 6f692cd2d2d5eb84ab790976eccc0bae, type: 3}
+    fusionDamage: 1
+    anchorType: 0
+  - tagA: BlushBloom
+    tagB: SkyLume
+    fusionPrefab: {fileID: 6262241374213919440, guid: 08cca6b766b1dc142a29e116c75e3b58, type: 3}
+    fusionDamage: 1
+    anchorType: 0
+  - tagA: Mysthaze
+    tagB: BlushBloom
+    fusionPrefab: {fileID: 5222750351268202474, guid: 471430dca40f907499aac08fe5b5bb09, type: 3}
+    fusionDamage: 1
+    anchorType: 0
+  - tagA: BlushBloom
+    tagB: SkyLume
+    fusionPrefab: {fileID: 6262241374213919440, guid: 08cca6b766b1dc142a29e116c75e3b58, type: 3}
+    fusionDamage: 1
+    anchorType: 0
   offset: {x: 0, y: 0, z: 0}
   doubleTapDelay: 0.4
 --- !u!114 &5843498840593930012

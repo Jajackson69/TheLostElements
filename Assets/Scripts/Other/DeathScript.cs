@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathUIManager : MonoBehaviour
 {
@@ -8,7 +8,6 @@ public class DeathUIManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button mainMenuButton;
 
-    private const string GAME_SCENE = "Gamemap1";
     private const string MAIN_MENU_SCENE = "Windscene";
 
     void Awake()
@@ -16,7 +15,7 @@ public class DeathUIManager : MonoBehaviour
         if (deathUI != null)
             deathUI.SetActive(false);
 
-        restartButton.onClick.AddListener(RestartGame);
+        restartButton.onClick.AddListener(RestartScene);
         mainMenuButton.onClick.AddListener(GoToMainMenu);
     }
 
@@ -26,12 +25,13 @@ public class DeathUIManager : MonoBehaviour
             deathUI.SetActive(true);
     }
 
-    void RestartGame()
+    private void RestartScene()
     {
-        SceneManager.LoadScene(GAME_SCENE);
+        Scene current = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(current.name);
     }
 
-    void GoToMainMenu()
+    private void GoToMainMenu()
     {
         SceneManager.LoadScene(MAIN_MENU_SCENE);
     }

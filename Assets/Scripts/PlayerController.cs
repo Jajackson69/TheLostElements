@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
 public class PlayerController : MonoBehaviour
@@ -14,41 +15,39 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool facingRight = true;
 
-    [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
     [SerializeField] private float knockbackDuration = 0.2f;
     private bool isKnockedback = false;
 
-    [Header("Ground Check")]
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100;
     public int MaxHealth => maxHealth;
 
     private int currentHealth;
     public static Action<int> OnPlayerTakeDamage;
 
-    [Header("Bounce Settings")]
     public float bounceForce = 6f;
     public float bounceForceMultiplier = 1.3f;
 
-    [Header("Fire Point Settings")]
     public Transform firePointRight;
     public Transform firePointLeft;
     public Transform firePointMiddle;
     [HideInInspector] public Transform currentFirePoint;
 
-    [Header("Chat Settings")]
     [SerializeField] private Fairy fairyController;
     [SerializeField] private DialogueSystem dialogueSystem;
 
-    [Header("Magic Settings")]
     [SerializeField] private ElementVFXManager vfxManager;
+
+    [SerializeField] private GameObject deathUI;
+
+    private bool playingFootsteps = false;
+    public float footstepSpeed = 0.5f;
 
     public PlayerControls Controls => controls;
 
@@ -95,38 +94,63 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
 #if UNITY_6000_0_OR_NEWER
-if (!isKnockedback)
-    rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        if (!isKnockedback)
+            rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 #else
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
 #endif
 
         animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > 0.1f);
+
+        bool isRunning = Mathf.Abs(moveInput.x) > 0.1f && isGrounded && !isKnockedback;
+
+        if (isRunning && !playingFootsteps)
+            StartFootsteps();
+        else if (!isRunning && playingFootsteps)
+            StopFootsteps();
+
         UpdateJumpAndFallAnimations();
         FlipSprite();
     }
 
+    private void StartFootsteps()
+    {
+        playingFootsteps = true;
+        InvokeRepeating(nameof(PlayFootstep), 0f, footstepSpeed);
+    }
 
-public void ApplyKnockback(Vector2 knockDir)
-{
-    StartCoroutine(KnockbackCoroutine(knockDir));
-}
+    private void PlayFootstep()
+    {
+        float pitch = 2f + UnityEngine.Random.Range(0f, 0.5f);
+        SoundEffectManager.Play("footsteps", pitch);
+    }
 
-private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
-{
-    isKnockedback = true;
+    private void StopFootsteps()
+    {
+        playingFootsteps = false;
+        CancelInvoke(nameof(PlayFootstep));
+    }
+
+    public void ApplyKnockback(Vector2 knockDir)
+    {
+        StartCoroutine(KnockbackCoroutine(knockDir));
+    }
+
+    private IEnumerator KnockbackCoroutine(Vector2 knockDir)
+    {
+        isKnockedback = true;
 
 #if UNITY_6000_0_OR_NEWER
-    rb.linearVelocity = Vector2.zero;
-    rb.AddForce(knockDir, ForceMode2D.Impulse);
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(knockDir, ForceMode2D.Impulse);
 #else
-    rb.velocity = Vector2.zero;
-    rb.AddForce(knockDir, ForceMode2D.Impulse);
+        rb.velocity = Vector2.zero;
+        rb.AddForce(knockDir, ForceMode2D.Impulse);
 #endif
 
-    yield return new WaitForSeconds(knockbackDuration);
-    isKnockedback = false;
-}
+        yield return new WaitForSeconds(knockbackDuration);
+        isKnockedback = false;
+    }
 
     private void UpdateJumpAndFallAnimations()
     {
@@ -187,30 +211,6 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
         fairyController.SpawnBubble();
     }
 
-    private void OnElement1(InputAction.CallbackContext context)
-    {
-        if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("Crimsonova");
-    }
-
-    private void OnElement2(InputAction.CallbackContext context)
-    {
-        if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("SkyLume");
-    }
-
-    private void OnElement3(InputAction.CallbackContext context)
-    {
-        if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("Mysthaze");
-    }
-
-    private void OnElement4(InputAction.CallbackContext context)
-    {
-        if (!context.performed || vfxManager == null) return;
-        if (dialogueSystem != null) dialogueSystem.AdvanceFromAction("BlushBloom");
-    }
-
     private void FlipSprite()
     {
         if (moveInput.x > 0.05f && !facingRight)
@@ -227,69 +227,34 @@ private System.Collections.IEnumerator KnockbackCoroutine(Vector2 knockDir)
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    public void DamagePlayer(int damage)
     {
-        if (!other.gameObject.CompareTag("Enemy")) return;
+        currentHealth -= damage;
+        OnPlayerTakeDamage?.Invoke(currentHealth);
 
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy == null) return;
-
-        bool stomp = Physics2D.Raycast(
-            transform.position,
-            Vector2.down,
-            spriteRenderer.bounds.extents.y + 0.1f,
-            LayerMask.GetMask("Enemy")
-        );
-
-        if (stomp)
-        {
-#if UNITY_6000_0_OR_NEWER
-            Vector2 velocity = rb.linearVelocity;
-#else
-            Vector2 velocity = rb.velocity;
-#endif
-            velocity.y = 0f;
-
-#if UNITY_6000_0_OR_NEWER
-            rb.linearVelocity = velocity;
-#else
-            rb.velocity = velocity;
-#endif
-
-            float force = bounceForce;
-            if (controls.Player.Jump.ReadValue<float>() > 0.5f)
-                force *= bounceForceMultiplier;
-
-            rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
-            enemy.Die();
-        }
+        if (currentHealth <= 0)
+            Die();
     }
 
-   public void DamagePlayer(int damage)
-{
-    currentHealth -= damage;
-    OnPlayerTakeDamage?.Invoke(currentHealth);
+    public void Die()
+    {
+        rb.bodyType = RigidbodyType2D.Static;
+        moveInput = Vector2.zero;
 
-    if (currentHealth <= 0)
-        Die();
-}
+        if (controls != null)
+            controls.Disable();
 
-void Die()
-{
-    var ui = FindObjectOfType<DeathUIManager>();
+        animator.ResetTrigger("death");
+        animator.SetTrigger("death");
 
-    if (ui != null)
-        ui.ShowDeathUI();
-    else
-        Debug.LogError("DeathUIManager not found in scene!");
+        StartCoroutine(DeathRoutine());
+    }
 
-    // disable player visuals + collisions
-    GetComponent<SpriteRenderer>().enabled = false;
-    GetComponent<Collider2D>().enabled = false;
-    rb.linearVelocity = Vector2.zero;
-}
-
-
+    private IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(1.2f);
+        deathUI.SetActive(true);
+    }
 
     private void OnDrawGizmosSelected()
     {

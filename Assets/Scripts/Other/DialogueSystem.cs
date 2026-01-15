@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System;
 
-
-[System.Serializable]
+[Serializable]
 public class DialogueLine
 {
     public string text;
@@ -25,31 +24,40 @@ public class DialogueSystem : MonoBehaviour
     private bool isComplete;
     private Coroutine typingCoroutine;
 
-    private static PlayerControls sharedControls;
-    private static bool inputHooked;
+    private PlayerControls controls;
+
     public static Action OnDialogueFinished;
 
 
-    void Start()
+    // --- LIFECYCLE ---
+    private void Awake()
+    {
+        controls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        controls.Dialogue.Enable();
+        controls.Dialogue.Next.performed += OnAdvancePressed;
+    }
+
+    private void OnDisable()
+    {
+        controls.Dialogue.Next.performed -= OnAdvancePressed;
+        controls.Dialogue.Disable();
+    }
+
+    private void Start()
     {
         StartCoroutine(InitDialogue());
     }
 
+
+    // --- INIT ---
     IEnumerator InitDialogue()
     {
         yield return null;
         yield return null;
-
-        if (sharedControls == null)
-            sharedControls = new PlayerControls();
-
-        if (!inputHooked)
-        {
-            sharedControls.Dialogue.Next.performed += OnAdvancePressed;
-            inputHooked = true;
-        }
-
-        sharedControls.Dialogue.Enable();
 
         if (dialogueText != null)
             dialogueText.text = "";
@@ -57,8 +65,8 @@ public class DialogueSystem : MonoBehaviour
         StartDialogue();
     }
 
-    
 
+    // --- FLOW ---
     public void StartDialogue()
     {
         StartCoroutine(SafeStartDialogue());
@@ -75,9 +83,12 @@ public class DialogueSystem : MonoBehaviour
     {
         if (dialogueLines == null || currentLineIndex < 0 || currentLineIndex >= dialogueLines.Length)
             return null;
+
         return dialogueLines[currentLineIndex];
     }
 
+
+    // --- INPUT ---
     void OnAdvancePressed(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -86,6 +97,7 @@ public class DialogueSystem : MonoBehaviour
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
         if (line.requiresAction) return;
+
         InternalAdvance();
     }
 
@@ -94,11 +106,15 @@ public class DialogueSystem : MonoBehaviour
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
         if (!line.requiresAction) return;
+
         if (!string.IsNullOrEmpty(line.requiredActionId) && line.requiredActionId != actionId)
             return;
+
         InternalAdvance();
     }
 
+
+    // --- TEXT ADVANCE ---
     void InternalAdvance()
     {
         if (isTyping)
@@ -110,9 +126,12 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
+
+    // --- DISPLAY ---
     void DisplayLine()
     {
         DialogueLine line = GetCurrentLine();
+
         if (line == null)
         {
             EndDialogue();
@@ -151,8 +170,10 @@ public class DialogueSystem : MonoBehaviour
     {
         DialogueLine line = GetCurrentLine();
         if (line == null) return;
+
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
+
         dialogueText.text = line.text;
         isTyping = false;
         isComplete = true;
@@ -163,24 +184,15 @@ public class DialogueSystem : MonoBehaviour
             StartCoroutine(AutoEndAfterDelay());
     }
 
+
     IEnumerator AutoEndAfterDelay()
     {
         yield return new WaitForSeconds(1f);
         EndDialogue();
     }
 
-    void ShowMouseHint()
-    {
-        if (mouseAnimator != null)
-            mouseAnimator.SetBool("ClickHint", true);
-    }
 
-    void HideMouseHint()
-    {
-        if (mouseAnimator != null)
-            mouseAnimator.SetBool("ClickHint", false);
-    }
-
+    // --- END ---
     void NextLine()
     {
         currentLineIndex++;
@@ -199,14 +211,31 @@ public class DialogueSystem : MonoBehaviour
     {
         isTyping = false;
         isComplete = false;
+
         if (dialogueText != null)
             dialogueText.text = "";
+
         HideMouseHint();
+
         if (mouseAnimator != null)
             mouseAnimator.SetTrigger("Hide");
+
         gameObject.SetActive(false);
 
         OnDialogueFinished?.Invoke();
+    }
 
+
+    // --- UI ---
+    void ShowMouseHint()
+    {
+        if (mouseAnimator != null)
+            mouseAnimator.SetBool("ClickHint", true);
+    }
+
+    void HideMouseHint()
+    {
+        if (mouseAnimator != null)
+            mouseAnimator.SetBool("ClickHint", false);
     }
 }

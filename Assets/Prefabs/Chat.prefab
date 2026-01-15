@@ -422,7 +422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
   dialogueText: {fileID: 4715775772120675092}
-  dotsText: {fileID: 0}
   dialogueLines:
   - text: Hello
     requiresAction: 0
@@ -434,7 +433,7 @@ MonoBehaviour:
     requiresAction: 0
     requiredActionId: 
   typingSpeed: 0.03
-  dotsInterval: 0.4
+  mouseAnimator: {fileID: 0}
 --- !u!1 &5927335563587424007
 GameObject:
   m_ObjectHideFlags: 0
